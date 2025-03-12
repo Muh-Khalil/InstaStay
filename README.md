@@ -9,7 +9,8 @@
 ✅ **Admin Dashboard** – Manage users, bookings, and hotel details.  
 ✅ **Payment Integration** – Secure payment gateway for booking confirmations.  
 ✅ **Search & Filters** – Advanced filters to find the best stays based on location, price, and rating.  
-✅ **Geolocation Tracking** – Track user location to suggest nearby hotels.  
+✅ **Geolocation Tracking** – Track user location to suggest nearby hotels. 
+✅ **MVC Architecture** - Organized code structure for maintainability and scalability.
 
 ---
 

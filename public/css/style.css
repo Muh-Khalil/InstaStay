@@ -22,9 +22,10 @@ html {
     height: 5rem;
 }
 
-.navbar-brand i {
-    color: brown;
-    font-size: 2rem;
+.logo {
+    font-size: 32px !important;
+    color: teal !important;
+    font-weight: bold;
 }
 
 .custom-toggler {
