@@ -128,11 +128,14 @@ module.exports.filterlisting = async (req, res) => {
 };
 
 //Booking get route
-module.exports.booking = (req, res) => {
-    console.log("My name is Muhammad Khaili");
+module.exports.booking = async (req, res) => {
     let { id } = req.params;
-    console.log("The room id is: ", id);
-    res.render("listing/booking.ejs", { id });
+    const listing = await Listing.findById(id);
+    if (!listing) {
+        req.flash("error", "The hotel you are looking for does not exist.");
+        return res.redirect("/listings");
+    }
+    res.render("listing/booking.ejs", { id, listing });
 };
 
 //Booking post route
@@ -200,6 +203,11 @@ module.exports.bookinglist = async (req, res, next) => {
 //AboutUs page get route
 module.exports.aboutUs = (req, res) => {
     res.render("listing/AboutUs.ejs");
+};
+
+//Blog page get route
+module.exports.blog = async (req, res) => {
+    res.render("listing/blog.ejs", { pageType: 'blog' });
 };
 
 //Edit the listing route

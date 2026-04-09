@@ -1,47 +1,54 @@
 <% layout("/layout/admin-dashboard.ejs") %>
-<div>
-    <h3 class="text-center fw-bold mb-3">All Listings</h3>
-    
-    <div class="row d-flex justify-content-center align-items-center mt-3">
-        <div class="col-md-5 mb-3">
-            <div class="card text-center shadow-lg rounded">
-                <div class="card-body">
-                    <h5 class="card-title fw-bold">Total Users</h5>
-                    <p class="card-text fs-4 text-primary"><%= users.length %></p>
-                </div>
-            </div>
+
+<div class="dashboard-header mb-5">
+    <div class="row align-items-center">
+        <div class="col">
+            <h1 style="font-family: var(--serif); font-weight: 700; font-size: 32px;" class="mb-1 text-white">Hotel Asset Audit</h1>
+            <p class="text-white-50 mb-0">Verify and manage all global hotel listings on the platform.</p>
         </div>
-        <div class="col-md-5 mb-3">
-            <div class="card text-center shadow-lg rounded">
-                <div class="card-body">
-                    <h5 class="card-title fw-bold">Total Lists</h5>
-                    <p class="card-text fs-4 text-success"><%= listings.length%></p>
-                </div>
+        <div class="col-auto">
+            <div class="stat-pill d-flex align-items-center gap-3">
+                <div class="text-white-50 small">Total Live Assets: <span class="text-gold fw-bold ms-1"><%= listings.length %> Hotels</span></div>
             </div>
         </div>
     </div>
+</div>
 
-
-    <table class="table table-hover table-striped">
-        <thead class="table-dark">
+<div class="table-premium table-responsive">
+    <table class="table table-dark table-hover mb-0">
+        <thead>
             <tr>
-                <th>No.</th>
-                <th>Listing Title</th>
+                <th class="ps-4">No.</th>
+                <th>Hotel Info</th>
                 <th>Location</th>
-                <th>Price</th>
-                <th>Actions</th>
+                <th>Market Value</th>
+                <th class="text-end pe-4">Risk Mgmt</th>
             </tr>
         </thead>
         <tbody>
             <% listings.forEach((listing, index) => { %>
                 <tr>
-                    <td><%= index + 1 %></td>
-                    <td><%= listing.title %></td>
-                    <td><%= listing.location %></td>
-                    <td>$<%= listing.price %></td>
+                    <td class="ps-4 text-white-50 small">#<%= index + 1 %></td>
                     <td>
-                        <a href="/admin/delete-listing/<%= listing._id %>" class="btn btn-danger btn-sm">
-                            <i class="fas fa-trash"></i><span class="d-sm-inline">Delete</span>
+                        <div class="d-flex align-items-center gap-3">
+                            <img src="<%= listing.image.url %>" class="rounded" style="width: 45px; height: 45px; object-fit: cover; border: 1px solid rgba(255,255,255,0.05);">
+                            <div>
+                                <div class="fw-bold text-white small"><%= listing.title %></div>
+                                <div style="font-size: 11px;" class="text-white-50">ID: <%= listing._id.toString().slice(-6).toUpperCase() %></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="text-white small"><%= listing.location %></div>
+                        <div class="text-gold" style="font-size: 11px;"><i class="fas fa-globe-americas me-1"></i><%= listing.country %></div>
+                    </td>
+                    <td>
+                         <div class="text-gold fw-bold">$<%= listing.price %></div>
+                         <div class="text-white-50" style="font-size: 11px;">Per Night Rate</div>
+                    </td>
+                    <td class="text-end pe-4">
+                        <a href="/admin/delete-listing/<%= listing._id %>" class="btn btn-outline-danger btn-sm" onclick="return confirm('WARNING: You are about to permanently delete this hotel listing. This action cannot be undone.')">
+                            <i class="fas fa-trash-alt me-2"></i> Terminate
                         </a>
                     </td>
                 </tr>
@@ -49,3 +56,26 @@
         </tbody>
     </table>
 </div>
+
+<style>
+    .stat-pill {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.07);
+        padding: 8px 25px;
+        border-radius: 50px;
+    }
+    .btn-outline-danger {
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 8px 15px;
+        color: #e74c3c;
+        border-color: rgba(231, 76, 60, 0.2);
+    }
+    .btn-outline-danger:hover {
+        background: #e74c3c;
+        border-color: #e74c3c;
+        color: white;
+    }
+</style>

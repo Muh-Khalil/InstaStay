@@ -15,7 +15,7 @@ module.exports.signupPost = async (req, res, next) => {
     }
 
     try {
-        const { username, email, password } = req.body;
+        const { username, email, password, userRole } = req.body;
 
         // Check if the email is already registered
         const existingUser = await User.findOne({ email });
@@ -25,7 +25,7 @@ module.exports.signupPost = async (req, res, next) => {
         }
 
         // Register the user
-        let newUser = new User({ username, email });
+        let newUser = new User({ username, email, userRole });
         let registeredUser = await User.register(newUser, password);
         console.log(registeredUser);
 
@@ -35,7 +35,11 @@ module.exports.signupPost = async (req, res, next) => {
                 return next(err);
             }
             req.flash("success", "Welcome to InstaStay!");
-            res.redirect("/listings");
+            if (registeredUser.userRole === 'owner') {
+                res.redirect("/owner/dashboard");
+            } else {
+                res.redirect("/listings");
+            }
         });
 
     } catch (error) {
@@ -55,6 +59,10 @@ module.exports.loginPost = (req, res) => {
     
     if (res.locals.RedirectUrl) {
         res.redirect(res.locals.RedirectUrl);
+    } else if (req.user.userRole === 'owner') {
+        res.redirect("/owner/dashboard");
+    } else if (req.user.isAdmin) {
+        res.redirect("/admin");
     } else {
         res.redirect("/listings");
     }

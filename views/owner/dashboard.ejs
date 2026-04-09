@@ -1,0 +1,213 @@
+<% layout("/layout/owner-dashboard.ejs")%>
+
+<div class="dashboard-header mb-5">
+    <div class="row align-items-center">
+        <div class="col">
+            <h1 style="font-family: var(--serif); font-weight: 700; font-size: 36px; letter-spacing: -0.5px;"
+                class="mb-2 text-white">Hotel Analytics</h1>
+            <p class="text-white-50 mb-0 d-flex align-items-center gap-2">
+                <i class="fas fa-calendar-alt text-gold"></i>
+                Performance overview for your hotel portfolio as of <%= new Date().toLocaleDateString('en-US', {
+                    month: 'long' , day: 'numeric' , year: 'numeric' }) %>
+            </p>
+        </div>
+        <div class="col-auto">
+            <div class="d-flex gap-3">
+                <a href="/listings/new" class="btn btn-outline-gold px-4 py-2">
+                    <i class="fas fa-plus me-2"></i> Register Hotel
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Grid -->
+<div class="row g-4 mb-5">
+    <div class="col-md-3">
+        <div class="dashboard-card border-bottom border-warning border-3">
+            <div class="card-icon text-warning">
+                <i class="fas fa-hotel"></i>
+            </div>
+            <h3 class="fs-6 text-white-50 mb-1 text-uppercase letter-spacing-1">Total Hotels</h3>
+            <p class="fs-2 fw-bold mb-0 text-white" style="font-family: var(--serif);">
+                <%= listings.length %>
+            </p>
+            <div class="mt-2 small text-success">
+                <i class="fas fa-arrow-up"></i> Active Assets
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="dashboard-card border-bottom border-success border-3">
+            <div class="card-icon text-success">
+                <i class="fas fa-calendar-check"></i>
+            </div>
+            <h3 class="fs-6 text-white-50 mb-1 text-uppercase letter-spacing-1">Total Bookings</h3>
+            <p class="fs-2 fw-bold mb-0 text-white" style="font-family: var(--serif);">
+                <%= bookings.length %>
+            </p>
+            <div class="mt-2 small text-white-50">Across all locations</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="dashboard-card border-bottom border-info border-3">
+            <div class="card-icon text-info">
+                <i class="fas fa-wallet"></i>
+            </div>
+            <h3 class="fs-6 text-white-50 mb-1 text-uppercase letter-spacing-1">Estimated Revenue</h3>
+            <p class="fs-2 fw-bold mb-0 text-gold" style="font-family: var(--serif);">$<%=
+                    totalRevenue.toLocaleString() %>
+            </p>
+            <div class="mt-2 small text-info"><i class="fas fa-sync"></i> Real-time update</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="dashboard-card border-bottom border-danger border-3">
+            <div class="card-icon text-danger">
+                <i class="fas fa-award"></i>
+            </div>
+            <h3 class="fs-6 text-white-50 mb-1 text-uppercase letter-spacing-1">Portfolio Rating</h3>
+            <p class="fs-2 fw-bold mb-0 text-white" style="font-family: var(--serif);">4.9 <span class="fs-5 text-white-50">/
+                    5</span></p>
+            <div class="mt-2 small text-warning">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                    class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-5">
+    <!-- Recent Bookings -->
+    <div class="col-lg-8">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 style="font-family: var(--serif); font-size: 26px;" class="mb-0 text-white">Recent Reservations</h2>
+            <a href="/owner/bookings"
+                class="btn btn-sm btn-link text-gold text-decoration-none text-uppercase letter-spacing-1 fw-bold">View
+                History</a>
+        </div>
+
+        <div class="table-premium table-responsive">
+            <table class="table table-dark table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th class="border-0">Lead Guest</th>
+                        <th class="border-0">Hotel</th>
+                        <th class="border-0">Dates</th>
+                        <th class="border-0">Revenue</th>
+                        <th class="border-0 text-end">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (bookings.length> 0) { %>
+                        <% bookings.slice(0, 6).forEach(booking=> { %>
+                            <tr>
+                                <td class="border-0">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="bg-gold bg-opacity-10 text-gold rounded-circle d-flex align-items-center justify-content-center"
+                                            style="width: 40px; height: 40px; font-weight: bold;">
+                                            <%= booking.user ? booking.user.username.charAt(0).toUpperCase() : 'G'
+                                                %>
+                                        </div>
+                                        <div>
+                                            <div class="fw-bold text-white">
+                                                <%= booking.user ? booking.user.username : 'Guest' %>
+                                            </div>
+                                            <div class="small text-white-50">
+                                                <%= booking.user ? booking.user.email : 'N/A' %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="border-0">
+                                    <div class="fw-bold text-white">
+                                        <%= booking.listing ? booking.listing.title : 'Deleted Hotel' %>
+                                    </div>
+                                    <div class="small text-white-50"><i class="fas fa-map-marker-alt me-1"></i>
+                                        <%= booking.listing ? booking.listing.location : 'Global' %>
+                                    </div>
+                                </td>
+                                <td class="border-0 py-2">
+                                    <div class="small text-white">
+                                        <%= booking.checkin.toLocaleDateString('en-US', { month: 'short' ,
+                                            day: 'numeric' }) %> - <%= booking.checkout.toLocaleDateString('en-US',
+                                                { month: 'short' , day: 'numeric' }) %>
+                                    </div>
+                                    <div class="progress mt-1"
+                                        style="height: 3px; background: rgba(255,255,255,0.05);">
+                                        <div class="progress-bar bg-gold" style="width: 100%"></div>
+                                    </div>
+                                </td>
+                                <td class="border-0">
+                                    <span class="fw-bold text-gold">$<%= booking.listing ? booking.listing.price : 0
+                                            %></span>
+                                </td>
+                                <td class="border-0 text-end">
+                                    <button class="btn btn-link text-white-50 p-0"><i
+                                            class="fas fa-ellipsis-v"></i></button>
+                                </td>
+                            </tr>
+                            <% }) %>
+                                <% } else { %>
+                                    <tr>
+                                        <td colspan="5" class="py-5 text-center">
+                                            <i class="fas fa-calendar-times fs-1 text-white-50 mb-4 d-block"></i>
+                                            <div class="text-white-50">You haven't received any bookings yet.</div>
+                                            <a href="/listings/new" class="btn btn-link text-gold">List more
+                                                hotels to attract guests</a>
+                                        </td>
+                                    </tr>
+                                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Quick Actions & Top Properties -->
+    <div class="col-lg-4">
+        <h2 style="font-family: var(--serif); font-size: 26px;" class="mb-4 text-white">Top Performing</h2>
+
+        <div class="d-flex flex-column gap-3">
+            <% if (listings.length> 0) { %>
+                <% listings.slice(0, 3).forEach(listing=> { %>
+                    <div class="dashboard-card p-3">
+                        <div class="d-flex align-items-center gap-3">
+                            <img src="<%= listing.image.url %>" class="rounded"
+                                style="width: 70px; height: 70px; object-fit: cover;">
+                            <div class="flex-grow-1">
+                                <h4 class="fs-6 mb-1 text-white fw-bold">
+                                    <%= listing.title %>
+                                </h4>
+                                <div class="small text-gold mb-1">
+                                    <%= listing.location %>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="small text-white-50">Occupancy: 84%</span>
+                                    <span
+                                        class="badge bg-gold bg-opacity-10 text-gold border border-gold border-opacity-25">Featured</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% }) %>
+                        <% } else { %>
+                            <div class="dashboard-card p-4 text-center">
+                                <p class="text-white-50 small">No hotels listed yet.</p>
+                                <a href="/listings/new" class="btn btn-outline-gold btn-sm w-100">Add First
+                                    Hotel</a>
+                            </div>
+                            <% } %>
+
+                                <!-- Platform Support Card -->
+                                <div class="dashboard-card mt-4"
+                                    style="background: linear-gradient(135deg, var(--gold-dark), var(--dark2));">
+                                    <h4 class="fw-bold text-white mb-3">Host Support</h4>
+                                    <p class="small text-white text-opacity-75 mb-4">Need help managing your
+                                        hotels or optimizing your rates?</p>
+                                    <button class="btn btn-white btn-sm w-100 fw-bold py-2"
+                                        style="background: white; color: black; border: none;">Contact
+                                        Advisor</button>
+                                </div>
+        </div>
+    </div>
+</div>

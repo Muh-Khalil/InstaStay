@@ -1,75 +1,310 @@
 <% layout("/layout/boilerplate") %>
-<div class="container mt-5">
-    <h2 class="text-center">Book Your Stay</h2>
-    <form action="/listings/<%= id %>/booking" method="POST" class="row g-3" novalidate class="needs-validation">
-      
-      <!-- Name -->
-      <div class="col-md-6">
-        <label for="name" class="form-label">Full Name</label>
-        <input type="text" id="name" name="name" class="form-control" required>
-      </div>
-  
-      <!-- Email -->
-      <div class="col-md-6">
-        <label for="email" class="form-label">Email</label>
-        <input type="email" id="email" name="email" class="form-control" required>
-      </div>
-  
-      <!-- Phone Number -->
-      <div class="col-md-6">
-        <label for="phone" class="form-label">Phone Number</label>
-        <input type="text" id="phone" name="phone" class="form-control" required>
-      </div>
-  
-      <!-- Check-in Date -->
-      <div class="col-md-6">
-        <label for="checkin" class="form-label">Check-in Date</label>
-        <input type="date" id="checkin" name="checkin" class="form-control" required>
-      </div>
-  
-      <!-- Check-out Date -->
-      <div class="col-md-6">
-        <label for="checkout" class="form-label">Check-out Date</label>
-        <input type="date" id="checkout" name="checkout" class="form-control" required>
-      </div>
-  
-      <!-- Number of Guests -->
-      <div class="col-md-6">
-        <label for="guests" class="form-label">Number of Guests</label>
-        <input type="number" id="guests" name="guests" class="form-control" min="1" required>
-      </div>
-  
-      <!-- Room Type -->
-      <div class="col-md-6">
-        <label for="roomType" class="form-label">Room Type</label>
-        <select id="roomType" name="roomType" class="form-select" required>
-          <option value="Single">Single</option>
-          <option value="Double">Double</option>
-          <option value="Suite">Suite</option>
-        </select>
-      </div>
-  
-      <!-- Special Requests -->
-      <div class="col-12">
-        <label for="requests" class="form-label">Special Requests</label>
-        <textarea id="requests" name="requests" class="form-control" rows="3" placeholder="Any specific requirements?"></textarea>
-      </div>
-  
-      <!-- Payment Option -->
-      <div class="col-md-6">
-        <label for="payment" class="form-label">Payment Method</label>
-        <select id="payment" name="payment" class="form-select" required>
-          <option value="Cash">Cash</option>
-          <option value="Credit Card">Credit Card</option>
-          <option value="Online">Online Payment</option>
-        </select>
-      </div>
-  
-      <!-- Submit Button -->
-      <div class="col-12 text-center">
-        <button type="submit" class="btn btn-primary w-50">Confirm Booking</button>
-      </div>
-  
-    </form>
-  </div>
-  
+
+<style>
+    .booking-page-wrapper {
+        min-height: 100vh;
+        background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('<%= listing.image.url %>') center/cover no-repeat fixed;
+        padding: 50px 0;
+        display: flex;
+        align-items: center;
+    }
+
+    .booking-glass-container {
+        background: rgba(15, 15, 15, 0.7);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    }
+
+    .booking-header {
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    .booking-header h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.5rem;
+        color: #fff;
+        margin-bottom: 10px;
+    }
+
+    .hotel-badge {
+        display: inline-block;
+        background: var(--gold);
+        color: #000;
+        padding: 5px 15px;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 15px;
+    }
+
+    .form-section-title {
+        color: var(--gold);
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+        padding-bottom: 10px;
+    }
+
+    .form-control, .form-select {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #fff !important;
+        border-radius: 12px;
+        padding: 12px 15px;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus, .form-select:focus {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: var(--gold);
+        box-shadow: 0 0 0 4px rgba(201, 168, 76, 0.15);
+        outline: none;
+    }
+
+    .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.3);
+    }
+
+    .form-label {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
+
+    .booking-summary-card {
+        background: rgba(201, 168, 76, 0.05);
+        border-radius: 15px;
+        border: 1px dashed rgba(201, 168, 76, 0.3);
+        padding: 25px;
+        height: 100%;
+    }
+
+    .summary-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+        font-size: 0.95rem;
+    }
+
+    .summary-label {
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    .summary-value {
+        color: #fff;
+        font-weight: 600;
+    }
+
+    .summary-total {
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .total-price {
+        color: var(--gold);
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+
+    .btn-confirm-booking {
+        background: var(--gold);
+        border: none;
+        color: #000;
+        padding: 15px 30px;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .btn-confirm-booking:hover {
+        background: #e0bc5a;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+
+    /* Select option styling */
+    select option {
+        background-color: #1a1a1a;
+        color: white;
+    }
+
+    @media (max-width: 768px) {
+        .booking-glass-container {
+            padding: 20px;
+        }
+    }
+</style>
+
+<div class="booking-page-wrapper mt-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-10">
+                <div class="booking-glass-container">
+                    
+                    <div class="booking-header">
+                        <span class="hotel-badge"><i class="fas fa-crown me-2"></i>Premium Selection</span>
+                        <h2>Complete Your Reservation</h2>
+                        <p class="text-white-50">You're just one step away from your dream stay at <strong><%= listing.title %></strong></p>
+                    </div>
+
+                    <form action="/listings/<%= id %>/booking" method="POST" class="needs-validation" novalidate id="luxuryBookingForm">
+                        <div class="row g-5">
+                            
+                            <!-- LEFT COLUMN: FORM FIELDS -->
+                            <div class="col-lg-7">
+                                
+                                <div class="form-section">
+                                    <div class="form-section-title">
+                                        <i class="fas fa-user-circle"></i> Personal Information
+                                    </div>
+                                    <div class="row g-3">
+                                        <div class="col-md-12">
+                                            <label for="name" class="form-label">Full Name</label>
+                                            <input type="text" id="name" name="name" class="form-control" placeholder="John Doe" value="<%= currUser ? currUser.username : '' %>" required>
+                                            <div class="invalid-feedback">Please enter your full name.</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="email" class="form-label">Email Address</label>
+                                            <input type="email" id="email" name="email" class="form-control" placeholder="john@example.com" value="<%= currUser ? currUser.email : '' %>" required>
+                                            <div class="invalid-feedback">Valid email required.</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="phone" class="form-label">Phone Number</label>
+                                            <input type="tel" id="phone" name="phone" class="form-control" placeholder="+1 (555) 000-0000" required>
+                                            <div class="invalid-feedback">Phone number required.</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-section mt-5">
+                                    <div class="form-section-title">
+                                        <i class="fas fa-calendar-alt"></i> Stay Details
+                                    </div>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label for="checkin" class="form-label">Check-in Date</label>
+                                            <input type="date" id="checkin" name="checkin" class="form-control" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="checkout" class="form-label">Check-out Date</label>
+                                            <input type="date" id="checkout" name="checkout" class="form-control" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="guests" class="form-label">Number of Guests</label>
+                                            <input type="number" id="guests" name="guests" class="form-control" min="1" max="10" value="1" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="roomType" class="form-label">Preferred Suite</label>
+                                            <select id="roomType" name="roomType" class="form-select" required>
+                                                <option value="" selected disabled>Select Room Type</option>
+                                                <option value="Executive Room">Executive Room</option>
+                                                <option value="Deluxe King Suite">Deluxe King Suite</option>
+                                                <option value="Presidential Suite">Presidential Suite</option>
+                                                <option value="Royal Penthouse">Royal Penthouse</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12 mt-3">
+                                            <label for="requests" class="form-label">Special Inquiries / Requests</label>
+                                            <textarea id="requests" name="requests" class="form-control" rows="3" placeholder="Dietary requirements, early check-in, honeymoon setup..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- RIGHT COLUMN: SUMMARY & PAYMENT -->
+                            <div class="col-lg-5">
+                                <div class="booking-summary-card">
+                                    <div class="form-section-title">
+                                        <i class="fas fa-receipt"></i> Booking Summary
+                                    </div>
+                                    
+                                    <div class="summary-content">
+                                        <div class="summary-item">
+                                            <span class="summary-label">Standard Rate</span>
+                                            <span class="summary-value">$<%= listing.price.toLocaleString() %> / Night</span>
+                                        </div>
+                                        <div class="summary-item">
+                                            <span class="summary-label">Service Fee</span>
+                                            <span class="summary-value">$25.00</span>
+                                        </div>
+                                        <div class="summary-item">
+                                            <span class="summary-label">Luxury Tax (5%)</span>
+                                            <span class="summary-value">$<%= (listing.price * 0.05).toFixed(2) %></span>
+                                        </div>
+                                        
+                                        <div class="mt-4 mb-3">
+                                            <label for="payment" class="form-label">Settlement Method</label>
+                                            <select id="payment" name="payment" class="form-select" required>
+                                                <option value="Online Payment">Online Express Checkout</option>
+                                                <option value="Credit Card">Credit Card (Pay at Hotel)</option>
+                                                <option value="Cash">Cash Settlement</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="summary-total">
+                                            <span class="total-label text-white">Estimated Total</span>
+                                            <span class="total-price">$<%= (listing.price + 25 + (listing.price * 0.05)).toFixed(2) %></span>
+                                        </div>
+
+                                        <p class="text-white-50 small mt-3 text-center">
+                                            <i class="fas fa-shield-alt me-1"></i> Secure 256-bit encrypted reservation
+                                        </p>
+
+                                        <div class="d-grid mt-4">
+                                            <button type="submit" class="btn btn-confirm-booking">
+                                                Confirm Reservation
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (() => {
+        'use strict';
+        const forms = document.querySelectorAll('.needs-validation');
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+
+        // Set min date for check-in to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('checkin').setAttribute('min', today);
+        document.getElementById('checkout').setAttribute('min', today);
+    })();
+</script>

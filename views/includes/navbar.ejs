@@ -1,31 +1,71 @@
-<style>
-
-</style>
-<nav class="navbar navbar-expand-md border-bottom">
-  <div class="container-fluid">
-    <a class="navbar-brand logo" href="/">InstaStay</a>
-    <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse"
-      data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
-      aria-label="Toggle navigation">
-      <i class="fa-solid fa-bars"></i>
-    </button>
-
-    <div class="collapse navbar-collapse text-center" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link active" aria-current="page" href="/listings">Home</a>
-        <a class="nav-link" href="/listings/AboutUs">About Us</a>
-        <a class="nav-link" href="/listings/new">Add new List</a>
-        <a class="nav-link" href="/listings/filter">Filtering</a>
-      </div>
-      <div class="navbar-nav ms-auto">
-        <% if(typeof currUser !=="undefined" && currUser){ %>
-          <a class="nav-link" href="/logout">Log out</a>
-          <% } else { %>
-            <a class="nav-link active" aria-current="page" href="/signup">SignUp</a>
-            <a class="nav-link" href="/login">Log In</a>
-            <% } %>
-      </div>
+<!-- NAV -->
+<nav id="navbar">
+  <a href="/" class="nav-logo">Insta<span>Stay</span></a>
+  
+  <div class="hamburger" id="hamburger">
+    <i class="fa-solid fa-bars"></i>
+  </div>
+  
+  <div class="nav-menu" id="navMenu">
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/listings#rooms">Rooms</a></li>
+      <li><a href="/listings#facilities">Facilities</a></li>
+      <li><a href="/listings/aboutus">About us</a></li>
+      <li><a href="/listings/blog">Blog</a></li>
+      <li><a href="/listings#contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <% if(typeof currUser !=="undefined" && currUser){ %>
+        <% if(currUser.userRole === 'owner') { %>
+          <a href="/owner/dashboard" class="nav-dashboard-link me-3 text-gold text-decoration-none">Dashboard</a>
+        <% } %>
+        <% if(currUser.isAdmin) { %>
+          <a href="/admin" class="nav-dashboard-link me-3 text-gold text-decoration-none">Admin Panel</a>
+        <% } %>
+        <a href="/logout" class="btn-outline">Log out</a>
+        <% if(currUser.userRole === 'owner' || currUser.isAdmin) { %>
+          <a href="/listings/new" class="btn-gold">Add Hotel</a>
+        <% } else { %>
+          <a href="/listings" class="btn-gold">Book Now</a>
+        <% } %>
+      <% } else { %>
+        <a href="/login" class="btn-outline">Sign In</a>
+        <a href="/signup" class="btn-gold">Book Now</a>
+      <% } %>
     </div>
   </div>
 </nav>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('navMenu');
+    
+    if (hamburger && navMenu) {
+      hamburger.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+        const icon = hamburger.querySelector('i');
+        if (navMenu.classList.contains('active')) {
+          icon.classList.remove('fa-bars');
+          icon.classList.add('fa-xmark');
+        } else {
+          icon.classList.remove('fa-xmark');
+          icon.classList.add('fa-bars');
+        }
+      });
+
+      // Close menu when clicking a link
+      const links = navMenu.querySelectorAll('a');
+      links.forEach(link => {
+        link.addEventListener('click', () => {
+          navMenu.classList.remove('active');
+          const icon = hamburger.querySelector('i');
+          icon.classList.remove('fa-xmark');
+          icon.classList.add('fa-bars');
+        });
+      });
+    }
+  });
+</script>
 <script src="/js/script.js"></script>

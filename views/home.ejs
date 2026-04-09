@@ -1,0 +1,409 @@
+<% layout("/layout/boilerplate") %>
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-tag">Luxury Hotel &amp; Resort</div>
+      <h1>Welcome to a World of <em>Elite</em> Comfort</h1>
+      <p>Experience unmatched elegance and world-class hospitality at InstaStay. Where every detail is crafted for your
+        perfect stay.</p>
+      <div class="hero-btns">
+        <a href="#rooms" class="btn-hero">Explore Rooms</a>
+        <a href="#facilities" class="btn-hero-ghost">Our Facilities</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">250+</div>
+        <div class="hero-stat-label">Luxury Rooms</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">15+</div>
+        <div class="hero-stat-label">Years Experience</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">98%</div>
+        <div class="hero-stat-label">Happy Guests</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEARCH BAR -->
+  <div class="search-section">
+    <form action="/listings" method="GET" class="search-box">
+      <div class="search-field">
+        <label>Check In</label>
+        <input type="date" value="2026-04-15">
+      </div>
+      <div class="search-field">
+        <label>Check Out</label>
+        <input type="date" value="2026-04-18">
+      </div>
+      <div class="search-field">
+        <label>Room Type</label>
+        <select>
+          <option>Select Room Type</option>
+          <option>Deluxe Room</option>
+          <option>Suite Room</option>
+          <option>Presidential Suite</option>
+          <option>Family Room</option>
+        </select>
+      </div>
+      <button type="submit" class="search-btn">Check Availability</button>
+    </form>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="about-grid">
+      <div class="about-img-wrap ">
+        <img class="about-img" src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80"
+          alt="Hotel lobby">
+        <div class="about-badge">
+          <div class="about-badge-num">15+</div>
+          <div class="about-badge-text">Years of Excellence</div>
+        </div>
+      </div>
+      <div class="about-text">
+        <div class="section-tag">About InstaStay</div>
+        <h2 class="section-title">Experience the Pinnacle of Luxury Hospitality</h2>
+        <p>Nestled in the heart of the city, InstaStay Hotel offers an extraordinary blend of timeless elegance and
+          modern sophistication. Our commitment to exceptional service has earned us recognition as one of the finest
+          luxury destinations.</p>
+        <p>From our meticulously designed rooms to our world-class dining, every element of InstaStay is crafted to
+          provide an unparalleled experience.</p>
+        <div class="about-features">
+          <div class="about-feature">
+            <div class="about-feature-icon"><i class="fa-solid fa-award"></i></div>
+            <div>
+              <h4>Award-Winning Service</h4>
+              <p>Recognized by leading hospitality organizations worldwide.</p>
+            </div>
+          </div>
+          <div class="about-feature">
+            <div class="about-feature-icon"><i class="fa-solid fa-utensils"></i></div>
+            <div>
+              <h4>World-Class Dining</h4>
+              <p>Three restaurants helmed by Michelin-starred chefs.</p>
+            </div>
+          </div>
+          <div class="about-feature">
+            <div class="about-feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <div>
+              <h4>24/7 Security & Privacy</h4>
+              <p>Your safety and privacy are our highest priorities.</p>
+            </div>
+          </div>
+        </div>
+        <a href="#rooms" class="btn-hero">Discover More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROOMS -->
+  <section class="rooms" id="rooms">
+    <div class="rooms-head">
+      <div>
+        <div class="section-tag">Our Rooms</div>
+        <h2 class="section-title">Handcrafted for Your Comfort</h2>
+      </div>
+      <a href="/listings" class="btn-outline">View All Rooms</a>
+    </div>
+    <div class="rooms-grid">
+      <a class="room-card " href="/listings">
+        <div class="room-img-wrap">
+          <img class="room-img" src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=700&q=80"
+            alt="Deluxe Room">
+          <span class="room-badge">Popular</span>
+        </div>
+        <div class="room-body">
+          <div class="room-meta">
+            <span class="room-meta-item"><span class="room-meta-icon"><i class="fa-solid fa-user"></i></span> 2
+              Guests</span>
+            <span class="room-meta-item"><span class="room-meta-icon"><i class="fa-solid fa-ruler-combined"></i></span>
+              45 m²</span>
+            <span class="room-meta-item"><span class="room-meta-icon"><i class="fa-solid fa-bed"></i></span> King
+              Bed</span>
+          </div>
+          <div class="room-name">Deluxe King Room</div>
+          <div class="room-desc">Spacious room with panoramic city views, plush king-size bed, and premium amenities for
+            the discerning traveller.</div>
+          <div class="room-footer">
+            <div class="room-price">
+              <strong>$249</strong>
+              <em>per night</em>
+            </div>
+            <button class="room-book">Book Now</button>
+          </div>
+        </div>
+      </a>
+      <a class="room-card" href="/listings">
+        <div class="room-img-wrap">
+          <img class="room-img" src="https://images.unsplash.com/photo-1591088398332-8a7791972843?w=700&q=80"
+            alt="Suite Room">
+          <span class="room-badge">Best Value</span>
+        </div>
+        <div class="room-body">
+          <div class="room-meta">
+            <span class="room-meta-item"><span class="room-meta-icon"><i class="fa-solid fa-user"></i></span> 3
+              Guests</span>
+            <span class="room-meta-item"><span class="room-meta-icon"><i class="fa-solid fa-ruler-combined"></i></span>
+              72 m²</span>
+            <span class="room-meta-item"><span class="room-meta-icon"><i class="fa-solid fa-bed"></i></span>
+              Suite</span>
+          </div>
+          <div class="room-name">Junior Suite</div>
+          <div class="room-desc">An elegant suite featuring a separate living area, marble bathroom, and breathtaking
+            skyline views from every window.</div>
+          <div class="room-footer">
+            <div class="room-price">
+              <strong>$399</strong>
+              <em>per night</em>
+            </div>
+            <button class="room-book">Book Now</button>
+          </div>
+        </div>
+      </a>
+      <a class="room-card" href="/listings">
+        <div class="room-img-wrap">
+          <img class="room-img" src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=700&q=80"
+            alt="Presidential Suite">
+          <span class="room-badge">Luxury</span>
+        </div>
+        <div class="room-body">
+          <div class="room-meta">
+            <span class="room-meta-item"><span class="room-meta-icon"><i class="fa-solid fa-user"></i></span> 4
+              Guests</span>
+            <span class="room-meta-item"><span class="room-meta-icon"><i class="fa-solid fa-ruler-combined"></i></span>
+              120 m²</span>
+            <span class="room-meta-item"><span class="room-meta-icon"><i class="fa-solid fa-bed"></i></span> Twin
+              Beds</span>
+          </div>
+          <div class="room-name">Presidential Suite</div>
+          <div class="room-desc">The pinnacle of luxury — a full floor suite with private terrace, butler service, and
+            exclusive access to all premium facilities.</div>
+          <div class="room-footer">
+            <div class="room-price">
+              <strong>$899</strong>
+              <em>per night</em>
+            </div>
+            <button class="room-book">Book Now</button>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- FACILITIES -->
+  <section class="facilities" id="facilities">
+    <div class="section-head"
+      style="text-align:center; display:flex; flex-direction:column; align-items:center;">
+      <div class="section-tag">What We Offer</div>
+      <h2 class="section-title">World-Class Facilities</h2>
+      <p class="section-sub">Every amenity designed to elevate your stay into an unforgettable experience.</p>
+    </div>
+    <div class="fac-grid">
+      <div class="fac-card">
+        <div class="fac-icon"><i class="fa-solid fa-swimming-pool"></i></div>
+        <div class="fac-name">Infinity Pool</div>
+        <div class="fac-desc">Rooftop infinity pool with panoramic views, open from sunrise to midnight.</div>
+      </div>
+     
+      <div class="fac-card">
+        <div class="fac-icon"><i class="fa-solid fa-wine-bottle"></i></div>
+        <div class="fac-name">Fine Dining</div>
+        <div class="fac-desc">Three world-class restaurants with international and local gourmet cuisine.</div>
+      </div>
+      <div class="fac-card">
+        <div class="fac-icon"><i class="fa-solid fa-car"></i></div>
+        <div class="fac-name">Valet Parking</div>
+        <div class="fac-desc">Complimentary valet and secure underground parking for all guests.</div>
+      </div>
+       <div class="fac-card">
+        <div class="fac-icon"><i class="fa-solid fa-plane"></i></div>
+        <div class="fac-name">Airport Transfer</div>
+        <div class="fac-desc">Luxury vehicle transfers available 24/7 to and from the airport.</div>
+      </div>
+      <div class="fac-card">
+        <div class="fac-icon"><i class="fa-solid fa-dumbbell"></i></div>
+        <div class="fac-name">Fitness Center</div>
+        <div class="fac-desc">State-of-the-art gym with personal trainers available around the clock.</div>
+      </div>
+       <div class="fac-card">
+        <div class="fac-icon"><i class="fa-solid fa-spa"></i></div>
+        <div class="fac-name">InstaStay Spa</div>
+        <div class="fac-desc">Full-service spa with certified therapists offering 40+ treatment packages.</div>
+      </div>
+      <div class="fac-card ">
+        <div class="fac-icon"><i class="fa-solid fa-calendar-check"></i></div>
+        <div class="fac-name">Events Hall</div>
+        <div class="fac-desc">Grand ballroom and conference spaces for up to 1,000 guests.</div>
+      </div>
+      
+     
+      <div class="fac-card">
+        <div class="fac-icon"><i class="fa-solid fa-concierge-bell"></i></div>
+        <div class="fac-name">Concierge</div>
+        <div class="fac-desc">Personal concierge service to arrange tours, reservations, and more.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <div class="gallery-strip" id="gallery">
+    <div class="gallery-item">
+      <img class="gallery-img" src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=600&q=80" alt="Pool">
+      <div class="gallery-overlay"><span class="gallery-label">Infinity Pool</span></div>
+    </div>
+    <div class="gallery-item">
+      <img class="gallery-img" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80"
+        alt="Restaurant">
+      <div class="gallery-overlay"><span class="gallery-label">Fine Dining</span></div>
+    </div>
+    <div class="gallery-item">
+      <img class="gallery-img" src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80" alt="Spa">
+      <div class="gallery-overlay"><span class="gallery-label">InstaStay Spa</span></div>
+    </div>
+    <div class="gallery-item">
+      <img class="gallery-img" src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=600&q=80" alt="Room">
+      <div class="gallery-overlay"><span class="gallery-label">Luxury Suites</span></div>
+    </div>
+    <div class="gallery-item">
+      <img class="gallery-img" src="https://images.unsplash.com/photo-1517840901100-8179e982acb7?w=600&q=80" alt="Bar">
+      <div class="gallery-overlay"><span class="gallery-label">Rooftop Bar</span></div>
+    </div>
+  </div>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials" id="testimonials">
+    <div class="section-tag" style="justify-content:center;">Guest Reviews</div>
+    <h2 class="section-title " style="text-align:center;">What Our Guests Say</h2>
+    <div class="test-grid">
+      <div class="test-card ">
+        <div class="test-quote">"</div>
+        <div class="test-text">An absolutely incredible experience. The staff remembered my name from the moment I
+          arrived and every detail of my stay was flawlessly arranged. I'll never stay anywhere else.</div>
+        <div class="test-stars">★★★★★</div>
+        <div class="test-author">
+          <img class="test-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80"
+            alt="James">
+          <div>
+            <div class="test-name">James Henderson</div>
+            <div class="test-location">New York, USA</div>
+          </div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-quote">"</div>
+        <div class="test-text">The Presidential Suite was beyond anything I could have imagined. The panoramic views,
+          the private butler, the spa access — this is what true luxury feels like. Simply unforgettable.</div>
+        <div class="test-stars">★★★★★</div>
+        <div class="test-author">
+          <img class="test-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80"
+            alt="Sophia">
+          <div>
+            <div class="test-name">Sophia Müller</div>
+            <div class="test-location">Berlin, Germany</div>
+          </div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-quote">"</div>
+        <div class="test-text">We chose InstaStay for our anniversary and it exceeded every expectation. The rooftop
+          dinner was romantic perfection, the spa was divine, and the service was genuinely heartfelt.</div>
+        <div class="test-stars">★★★★★</div>
+        <div class="test-author">
+          <img class="test-avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=80"
+            alt="Marcus">
+          <div>
+            <div class="test-name">Marcus & Aisha Chen</div>
+            <div class="test-location">London, UK</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="section-tag " style="justify-content:center;">Limited Offers</div>
+    <h2 class="section-title ">Book Your Dream Stay Today</h2>
+    <p class="">Take advantage of our exclusive seasonal packages and enjoy up to 30% off on select room
+      categories. Offer valid for a limited time.</p>
+    <div class="cta-btns ">
+      <a href="#rooms" class="btn-hero">Book Now</a>
+      <a href="#about" class="btn-hero-ghost">Learn More</a>
+    </div>
+  </section>
+
+  <!-- BLOG -->
+  <section class="blog" id="blog">
+    <div class="section-head"
+      style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:60px;">
+      <div>
+        <div class="section-tag">Latest News</div>
+        <h2 class="section-title">From Our Blog</h2>
+      </div>
+      <a href="#" class="btn-outline">All Posts</a>
+    </div>
+    <div class="blog-grid">
+      <div class="blog-card ">
+        <div class="blog-img-wrap">
+          <img class="blog-img" src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600&q=80" alt="Blog 1">
+        </div>
+        <div class="blog-cat">Travel Tips</div>
+        <div class="blog-title">10 Reasons to Choose a Luxury Hotel for Your Next Getaway</div>
+        <div class="blog-meta">March 28, 2026 &nbsp;·&nbsp; 5 min read</div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-img-wrap">
+          <img class="blog-img" src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=600&q=80"
+            alt="Blog 2">
+        </div>
+        <div class="blog-cat">Dining</div>
+        <div class="blog-title">Inside Our New Tasting Menu: A Culinary Journey Across Continents</div>
+        <div class="blog-meta">March 15, 2026 &nbsp;·&nbsp; 4 min read</div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-img-wrap">
+          <img class="blog-img" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80"
+            alt="Blog 3">
+        </div>
+        <div class="blog-cat">Wellness</div>
+        <div class="blog-title">The Art of Relaxation: How Our InstaStay Spa Redefines Self-Care</div>
+        <div class="blog-meta">February 22, 2026 &nbsp;·&nbsp; 6 min read</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <div class="newsletter">
+    <h3>Get Exclusive Offers Delivered to Your Inbox</h3>
+    <div class="newsletter-form">
+      <input class="newsletter-input" type="email" placeholder="Enter your email address">
+      <button class="newsletter-btn">Subscribe</button>
+    </div>
+  </div>
+
+ 
+
+  <script>
+    // Nav scroll
+    const navbar = document.getElementById('navbar');
+    if (navbar) {
+      window.addEventListener('scroll', () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 60);
+      });
+    }
+
+    // Search date defaults
+    const today = new Date();
+    const fmt = d => d.toISOString().split('T')[0];
+    const cin = today; cin.setDate(today.getDate());
+    const cout = new Date(today); cout.setDate(today.getDate() + 3);
+    const dateInputs = document.querySelectorAll('.search-section input[type=date]');
+    if (dateInputs.length >= 2) {
+      dateInputs[0].value = fmt(cin);
+      dateInputs[1].value = fmt(cout);
+    }
+  </script>

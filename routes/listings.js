@@ -33,7 +33,10 @@ router.get("/:id/booking", isloggedIn, listingControllers.booking);
 router.post("/:id/booking", isloggedIn, listingControllers.bookinglist);
 
 //AboutUs page get route
-router.get("/AboutUs", listingControllers.aboutUs);
+router.get("/aboutus", listingControllers.aboutUs);
+
+//Blog page get route
+router.get("/blog", listingControllers.blog);
 
 //Edit the listing route
 router.get("/:id/edit", isloggedIn, IsOwner, listingControllers.edit);

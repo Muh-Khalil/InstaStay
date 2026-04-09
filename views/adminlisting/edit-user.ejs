@@ -1,23 +1,83 @@
 <% layout("/layout/admin-dashboard.ejs") %>
 
-    <div class="row mt-3 mb-3 justify-content-center">
-        <h3 class="text-center fw-bold mb-3">Edit User</h3>
-        <div class="col-12 col-md-6 col-lg-4">
+<div class="dashboard-header mb-5">
+    <div class="row align-items-center">
+        <div class="col">
+            <h1 style="font-family: var(--serif); font-weight: 700; font-size: 32px;" class="mb-1 text-white">Identity Override</h1>
+            <p class="text-white-50 mb-0">Modify credential details for platform member #<%= user._id.toString().slice(-6).toUpperCase() %></p>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="stat-card p-4 p-md-5">
+            <div class="d-flex align-items-center gap-3 mb-5">
+                <div class="icon-box text-gold m-0"><i class="fas fa-user-edit"></i></div>
+                <div>
+                   <h3 class="fs-5 fw-bold text-white mb-0">Member Modification</h3>
+                    <p class="small text-white-50 mb-0">Update the core profile information</p>
+                </div>
+            </div>
+
             <form action="/admin/update-user/<%= user._id %>?_method=PUT" method="POST">
-                <div class="mb-3">
-                    <label for="username" class="form-label fw-semibold">Name:</label>
-                    <input type="text" id="username" name="username" value="<%= user.username %>" class="form-control"
-                        required>
+                <div class="luxury-input-group mb-4">
+                    <label class="luxury-label">System Alias / Username</label>
+                    <input type="text" name="username" value="<%= user.username %>" class="luxury-input" required>
+                </div>
+                
+                <div class="luxury-input-group mb-4">
+                    <label class="luxury-label">Registered Email Address</label>
+                    <input type="email" name="email" value="<%= user.email %>" class="luxury-input" required>
                 </div>
 
-                <div class="mb-3">
-                    <label for="email" class="form-label fw-semibold">Email:</label>
-                    <input type="email" id="email" name="email" value="<%= user.email %>" class="form-control" required>
-                </div>
-
-                <div class="d-grid">
-                    <button type="submit" class="btn btn-primary fw-semibold">Update User</button>
+                <div class="mt-5">
+                    <button type="submit" class="btn btn-gold w-100 py-3 fw-bold">Commit Identity Changes</button>
+                    <a href="/admin/user" class="btn btn-link text-white-50 w-100 mt-3 text-decoration-none small">Cancel and Return to Registry</a>
                 </div>
             </form>
         </div>
     </div>
+</div>
+
+<style>
+    .luxury-input-group {
+        margin-bottom: 25px;
+    }
+    .luxury-label {
+        display: block;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 11px;
+        color: var(--gold);
+        margin-bottom: 10px;
+    }
+    .luxury-input {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        outline: none;
+        padding: 15px 20px;
+        border-radius: 12px;
+        color: white;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        font-size: 15px;
+    }
+    .luxury-input:focus {
+        border-color: var(--gold);
+        background: rgba(255, 255, 255, 0.05);
+        box-shadow: 0 0 20px rgba(201,168,76,0.1);
+    }
+    .btn-gold {
+        background: var(--gold);
+        color: var(--dark);
+        border: none;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+    }
+    .btn-gold:hover {
+        background: var(--gold-light);
+        transform: translateY(-2px);
+    }
+</style>

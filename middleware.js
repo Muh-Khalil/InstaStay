@@ -70,6 +70,15 @@ module.exports.isAdmin = (req, res, next)=> {
     res.redirect("/listings"); // Redirect unauthorized users to login
 }
 
+// Middleware to check if user is a hotel owner
+module.exports.isOwnerRole = (req, res, next)=> {
+    if (req.isAuthenticated() && (req.user.userRole === 'owner' || req.user.isAdmin)) {
+        return next();
+    }
+    req.flash("error", "Access denied. Only Hotel Owners can view this page.");
+    res.redirect("/listings");
+}
+
 module.exports.restrictAdminSignup = async (req, res, next) => {
     try {
         const adminExists = await User.findOne({ isAdmin: true });

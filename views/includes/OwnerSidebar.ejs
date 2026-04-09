@@ -1,0 +1,35 @@
+<div class="d-flex">
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar bg-dark text-white vh-100">
+        <div class="d-flex justify-content-between align-items-center p-4">
+            <h3 class="text-center flex-grow-1" style="font-family: var(--serif); color: var(--gold);">Owner Panel</h3>
+            <button id="close-sidebar" class="btn btn-outline-light btn-sm d-md-none"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="px-3 mb-4">
+            <div class="p-3 rounded" style="background: rgba(255,255,255,0.05);">
+                <small class="text-muted d-block mb-1">Welcome back,</small>
+                <span class="fw-bold"><%= currUser ? currUser.username : 'Owner' %></span>
+            </div>
+        </div>
+        <a href="/owner/dashboard" class="menu-link <%= req.path === '/owner/dashboard' ? 'active' : '' %>"><i class="fas fa-home"></i> Overview</a>
+        <a href="/owner/listings" class="menu-link <%= req.path === '/owner/listings' ? 'active' : '' %>"><i class="fas fa-hotel"></i> My Hotels</a>
+        <a href="/listings/new" class="menu-link"><i class="fas fa-plus-circle"></i> Register New Hotel</a>
+        <a href="/owner/bookings" class="menu-link <%= req.path === '/owner/bookings' ? 'active' : '' %>"><i class="fas fa-calendar-check"></i> Bookings</a>
+        <a href="/owner/analytics" class="menu-link"><i class="fas fa-chart-line"></i> Performance</a>
+        <a href="/owner/setting" class="menu-link"><i class="fas fa-user-cog"></i> Profile Settings</a>
+        <div class="mt-auto p-4">
+            <a href="/logout" class="btn btn-outline-danger w-100 btn-sm"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+    </div>
+
+    <!-- Page Content -->
+    <div id="page-content" class="flex-grow-1 p-0">
+        <nav class="navbar navbar-dark bg-dark px-4 py-3 border-bottom border-secondary d-md-none">
+            <button id="toggle-sidebar" class="btn btn-outline-gold btn-sm"><i class="fas fa-bars"></i> Menu</button>
+            <span class="navbar-brand mb-0 h1" style="font-family: var(--serif);">InstaStay</span>
+        </nav>
+        <div class="p-4 p-md-5">
+            <%- body %>
+        </div>
+    </div>
+</div>

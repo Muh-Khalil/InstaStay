@@ -1,33 +1,124 @@
 <% layout("/layout/admin-dashboard.ejs") %>
-    <div class="<%= session.theme === 'dark' ? 'bg-dark text-white' : 'bg-light text-dark' %>">
-        <h2 class="text-center fw-bold text-dark">Admin Settings</h2>
 
-        <!-- Profile Settings -->
-        <div class="card p-3 mt-3">
-            <h4>Profile Settings</h4>
-            <form action="/admin/setting/profile" method="POST">
-                <div class="mb-3">
-                    <label>Username</label>
-                    <input type="text" name="username" value="<%= user.username %>" class="form-control">
-                </div>
-                <div class="mb-3">
-                    <label>Email</label>
-                    <input type="email" name="email" value="<%= user.email %>" class="form-control">
-                </div>
-                <div class="mb-3">
-                    <label>New Password</label>
-                    <input type="password" name="password" class="form-control">
-                </div>
-                <button type="submit" class="btn btn-primary">Save Changes</button>
-            </form>
-        </div>
-        <div class="card p-3 mt-3 border-danger">
-            <h4 class="text-danger">Delete Your Account</h4>
-            <p class="text-muted">
-                Once you delete your account, there is no going back. Please be certain.
-            </p>
-            <div class="mt-3 d-flex justify-content-between">
-                <a href="/admin/setting/delete" class="btn btn-danger">Delete Account</a>
-            </div>
+<div class="dashboard-header mb-5">
+    <div class="row align-items-center">
+        <div class="col">
+            <h1 style="font-family: var(--serif); font-weight: 700; font-size: 32px;" class="mb-1 text-white">Security & Configuration</h1>
+            <p class="text-white-50 mb-0">Manage your administrative credentials and platform security protocols.</p>
         </div>
     </div>
+</div>
+
+<div class="row g-5">
+    <!-- Profile Configuration -->
+    <div class="col-lg-7">
+        <div class="stat-card p-4 p-md-5">
+            <div class="d-flex align-items-center gap-3 mb-5">
+                <div class="icon-box text-gold m-0"><i class="fas fa-id-card"></i></div>
+                <div>
+                   <h3 class="fs-5 fw-bold text-white mb-0">Root Admin Profile</h3>
+                    <p class="small text-white-50 mb-0">Update your access credentials</p>
+                </div>
+            </div>
+
+            <form action="/admin/setting/profile" method="POST">
+                <div class="luxury-input-group mb-4">
+                    <label class="luxury-label">Administrative Alias</label>
+                    <input type="text" name="username" value="<%= user.username %>" class="luxury-input">
+                </div>
+                
+                <div class="luxury-input-group mb-4">
+                    <label class="luxury-label">Secure Contact Email</label>
+                    <input type="email" name="email" value="<%= user.email %>" class="luxury-input">
+                </div>
+
+                <div class="luxury-input-group mb-4">
+                    <label class="luxury-label">Authorization Key (New Password)</label>
+                    <input type="password" name="password" placeholder="Leave blank to keep existing" class="luxury-input">
+                </div>
+
+                <div class="mt-5">
+                    <button type="submit" class="btn btn-gold px-5 py-3 fw-bold">Update Infrastructure</button>
+                    <p class="text-white-50 small mt-3">All changes are logged in the master security audit trail.</p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Security Risks -->
+    <div class="col-lg-5">
+        <div class="stat-card p-4 p-md-5 border-danger border-opacity-25" style="background: rgba(220, 53, 69, 0.02);">
+            <div class="d-flex align-items-center gap-3 mb-4">
+                <div class="icon-box text-danger m-0" style="background: rgba(220, 53, 69, 0.05);"><i class="fas fa-user-slash"></i></div>
+                <div>
+                   <h3 class="fs-5 fw-bold text-white mb-0">Termination Zone</h3>
+                    <p class="small text-white-50 mb-0">Critical account actions</p>
+                </div>
+            </div>
+
+            <p class="text-white-50 small mb-4" style="line-height: 1.6;">
+                Deleting your administrative account is an irreversible operation. This will revoke your access to the platform control hub and all maintenance tools permanently.
+            </p>
+
+            <div class="p-3 rounded mb-4" style="background: rgba(220, 53, 69, 0.05); border-left: 3px solid #e74c3c;">
+                <p class="small text-danger mb-0 fw-bold"><i class="fas fa-info-circle me-2"></i> Only proceed if platform hand-over is complete.</p>
+            </div>
+
+            <a href="/admin/setting/delete" class="btn btn-outline-danger w-100 py-3 fw-bold" onclick="return confirm('CRITICAL: Final confirmation for account deletion. This action cannot be undone.')">
+                Initiate Account Deletion
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Reusing luxury input styles from hosting suite */
+    .luxury-input-group {
+        margin-bottom: 25px;
+    }
+    .luxury-label {
+        display: block;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 11px;
+        color: var(--gold);
+        margin-bottom: 10px;
+    }
+    .luxury-input {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        outline: none;
+        padding: 15px 20px;
+        border-radius: 12px;
+        color: white;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        font-size: 15px;
+    }
+    .luxury-input:focus {
+        border-color: var(--gold);
+        background: rgba(255, 255, 255, 0.05);
+        box-shadow: 0 0 20px rgba(201,168,76,0.1);
+    }
+    .btn-gold {
+        background: var(--gold);
+        color: var(--dark);
+        border: none;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+    }
+    .btn-gold:hover {
+        background: var(--gold-light);
+        transform: translateY(-2px);
+    }
+    .btn-outline-danger {
+        color: #e74c3c;
+        border-color: rgba(231, 76, 60, 0.3);
+        border-radius: 12px;
+    }
+    .btn-outline-danger:hover {
+        background: #e74c3c;
+        color: white;
+    }
+</style>

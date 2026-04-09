@@ -1,0 +1,62 @@
+<% layout("/layout/owner-dashboard.ejs")%>
+
+<div class="dashboard-header mb-5">
+    <div class="row align-items-center">
+        <div class="col">
+            <h1 style="font-family: var(--serif); font-weight: 700; font-size: 32px;" class="mb-1 text-white">Reservation Requests</h1>
+            <p class="text-white-50 mb-0">Track all incoming bookings and guest stays across your properties.</p>
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-outline-gold"><i class="fas fa-download me-2"></i> Export CSV</button>
+        </div>
+    </div>
+</div>
+
+<div class="dashboard-card p-0 overflow-hidden">
+    <div class="table-premium table-responsive">
+        <table class="table table-dark table-hover mb-0">
+            <thead>
+                <tr>
+                    <th class="border-0">Reservation ID</th>
+                    <th class="border-0">Lead Guest</th>
+                    <th class="border-0">Property</th>
+                    <th class="border-0">Stay Dates</th>
+                    <th class="border-0">Income</th>
+                    <th class="border-0">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (bookings.length > 0) { %>
+                    <% bookings.forEach(booking => { %>
+                        <tr>
+                            <td class="py-4 text-white-50 small">#RSV-<%= booking._id.toString().slice(-6).toUpperCase() %></td>
+                            <td class="py-4">
+                                <div class="fw-bold text-white"><%= booking.user ? booking.user.username : 'Guest' %></div>
+                                <div class="small text-white-50"><%= booking.user ? booking.user.email : '' %></div>
+                            </td>
+                            <td class="py-4">
+                                <span class="fw-bold text-white"><%= booking.listing ? booking.listing.title : 'N/A' %></span>
+                                <small class="d-block text-gold"><%= booking.listing ? booking.listing.location : '' %></small>
+                            </td>
+                            <td class="py-4">
+                                <div class="text-white"><%= booking.checkin.toLocaleDateString() %> - <%= booking.checkout.toLocaleDateString() %></div>
+                                <small class="text-white-50">3 Nights stay</small>
+                            </td>
+                            <td class="py-4">
+                                <div class="fw-bold text-success">$<%= booking.listing ? (booking.listing.price * 3) : 0 %></div>
+                                <small class="text-white-50">Net after fees</small>
+                            </td>
+                            <td class="py-4">
+                                <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3 py-2">Confirmed</span>
+                            </td>
+                        </tr>
+                    <% }) %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="6" class="py-5 text-center text-white-50">No reservations found yet.</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>

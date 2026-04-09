@@ -1,58 +1,174 @@
 <% layout("/layout/admin-dashboard.ejs")%>
-<div class="container mt-4">
-    <h2 class="mb-4 fw-bold text-dark">Welcome, Admin!</h2>
 
-    <!-- Quick Stats -->
-    <div class="row">
-        <div class="col-md-3">
-            <div class="card text-white bg-primary mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Total Users</h5>
-                    <p class="card-text fs-3"><%= users.length %></p>
-                </div>
-            </div>
+<div class="dashboard-header mb-5">
+    <div class="row align-items-center">
+        <div class="col">
+            <h1 style="font-family: var(--serif); font-weight: 700; font-size: 38px; letter-spacing: -1px;" class="mb-2 text-white">Platform Command</h1>
+            <p class="text-white-50 mb-0 d-flex align-items-center gap-2">
+                <i class="fas fa-shield-alt text-gold"></i>
+                Live system overview and management hub
+            </p>
         </div>
-        <div class="col-md-3">
-            <div class="card text-white bg-success mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Bookings</h5>
-                    <p class="card-text fs-3"><%= bookings.length %></p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card text-white bg-warning mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Revenue</h5>
-                    <p class="card-text fs-3">$<%= Revenue %></p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card text-white bg-secondary mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Listings</h5>
-                    <p class="card-text fs-3"><%= listings.length %></p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card text-white bg-danger mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Pending Requests</h5>
-                    <p class="card-text fs-3">42</p>
-                </div>
+        <div class="col-auto">
+            <div class="d-flex gap-3">
+                <button class="btn btn-outline-gold px-4 py-2" onclick="window.location.reload()">
+                    <i class="fas fa-sync-alt me-2"></i> Refresh Data
+                </button>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Recent Activities -->
-    <div class="card mt-3">
-        <div class="card-header">Recent Activities</div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">User <b>JohnDoe</b> booked a room.</li>
-            <li class="list-group-item">New user <b>JaneSmith</b> registered.</li>
-            <li class="list-group-item">Booking #456 was canceled.</li>
-        </ul>
+<!-- System Stats Grid -->
+<div class="row g-4 mb-5">
+    <div class="col-md-3">
+        <div class="stat-card border-bottom border-warning border-3">
+            <div class="icon-box text-warning">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3 class="fs-6 text-white-50 mb-1 text-uppercase letter-spacing-1">Registered Users</h3>
+            <p class="fs-1 fw-bold mb-0 text-white" style="font-family: var(--serif);"><%= users.length %></p>
+            <div class="mt-2 small text-success">
+                <i class="fas fa-chart-line me-1"></i> +12% Growth
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card border-bottom border-success border-3">
+            <div class="icon-box text-success">
+                <i class="fas fa-building"></i>
+            </div>
+            <h3 class="fs-6 text-white-50 mb-1 text-uppercase letter-spacing-1">Active Hotels</h3>
+            <p class="fs-1 fw-bold mb-0 text-white" style="font-family: var(--serif);"><%= listings.length %></p>
+            <div class="mt-2 small text-muted">Across <%= [...new Set(listings.map(l => l.country))].length %> Countries</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card border-bottom border-info border-3">
+            <div class="icon-box text-info">
+                <i class="fas fa-calendar-check"></i>
+            </div>
+            <h3 class="fs-6 text-white-50 mb-1 text-uppercase letter-spacing-1">Successful Stays</h3>
+            <p class="fs-1 fw-bold mb-0 text-white" style="font-family: var(--serif);"><%= bookings.length %></p>
+            <div class="mt-2 small text-info"><i class="fas fa-check-circle me-1"></i> System Verified</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card border-bottom border-gold border-3">
+            <div class="icon-box text-gold">
+                <i class="fas fa-gem"></i>
+            </div>
+            <h3 class="fs-6 text-white-50 mb-1 text-uppercase letter-spacing-1">Total Revenue</h3>
+            <p class="fs-1 fw-bold mb-0 text-gold" style="font-family: var(--serif);">$<%= Revenue.toLocaleString() %></p>
+            <div class="mt-2 small text-muted">Gross platform value</div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-5">
+    <!-- Platform Activity -->
+    <div class="col-lg-8">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 style="font-family: var(--serif); font-size: 28px;" class="mb-0 text-white">Platform Activity</h2>
+            <a href="/admin/booking" class="btn btn-sm btn-link text-gold text-decoration-none text-uppercase letter-spacing-1 fw-bold">Manage All</a>
+        </div>
+        
+        <div class="table-premium table-responsive">
+            <table class="table table-dark table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>Client</th>
+                        <th>Hotel Asset</th>
+                        <th>Date</th>
+                        <th>Transaction</th>
+                        <th class="text-end">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (bookings.length > 0) { %>
+                        <% bookings.slice(0, 8).forEach(booking => { %>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="bg-gold bg-opacity-10 text-gold rounded-circle d-flex align-items-center justify-content-center" style="width: 38px; height: 38px; font-weight: bold; border: 1px solid rgba(201,168,76,0.2);">
+                                            <%= booking.user ? booking.user.username.charAt(0).toUpperCase() : '?' %>
+                                        </div>
+                                        <div>
+                                            <div class="fw-bold text-white small"><%= booking.user ? booking.user.username : 'Ex-User' %></div>
+                                            <div style="font-size: 11px;" class="text-white-50"><%= booking.user ? booking.user.email : 'N/A' %></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="fw-bold text-white small"><%= booking.listing ? booking.listing.title : 'N/A' %></div>
+                                    <div style="font-size: 11px;" class="text-white-50"><%= booking.listing ? booking.listing.location : 'N/A' %></div>
+                                </td>
+                                <td>
+                                    <div class="small text-white"><%= booking.checkin.toLocaleDateString() %></div>
+                                </td>
+                                <td>
+                                    <span class="text-gold fw-bold small">$<%= booking.listing ? booking.listing.price : 0 %></span>
+                                </td>
+                                <td class="text-end">
+                                    <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25" style="font-size: 10px; padding: 6px 12px;">Verified</span>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="5" class="py-5 text-center text-white-50 italic">No recent system activity detected.</td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Quick Controls -->
+    <div class="col-lg-4">
+        <h2 style="font-family: var(--serif); font-size: 28px;" class="mb-4 text-white">Command Center</h2>
+        
+        <div class="d-flex flex-column gap-3">
+            <div class="stat-card p-4">
+                <h4 class="fs-6 fw-bold text-gold text-uppercase mb-3">User Management</h4>
+                <div class="d-grid gap-2">
+                    <a href="/admin/user" class="btn btn-outline-light btn-sm text-start py-2 px-3 border-opacity-25">
+                        <i class="fas fa-users me-2"></i> Review All Users
+                    </a>
+                    <a href="/admin/listing" class="btn btn-outline-light btn-sm text-start py-2 px-3 border-opacity-25">
+                        <i class="fas fa-building me-2"></i> Audit Hotel Listings
+                    </a>
+                </div>
+            </div>
+
+            <div class="stat-card p-4">
+                <h4 class="fs-6 fw-bold text-gold text-uppercase mb-3">System Health</h4>
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between mb-1">
+                        <span class="small text-white-50">Database Load</span>
+                        <span class="small text-success">Optimal</span>
+                    </div>
+                    <div class="progress" style="height: 4px; background: rgba(255,255,255,0.05);">
+                        <div class="progress-bar bg-success" style="width: 24%"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="d-flex justify-content-between mb-1">
+                        <span class="small text-white-50">Server Latency</span>
+                        <span class="small text-warning">42ms</span>
+                    </div>
+                    <div class="progress" style="height: 4px; background: rgba(255,255,255,0.05);">
+                        <div class="progress-bar bg-warning" style="width: 65%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-card p-4 text-center" style="background: linear-gradient(135deg, #1a1a1a, #0d0d0d); border: 1px solid rgba(220, 53, 69, 0.2);">
+                <div class="text-danger fs-3 mb-2"><i class="fas fa-exclamation-triangle"></i></div>
+                <h5 class="fw-bold text-white mb-2">Emergency Hub</h5>
+                <p class="small text-white-50 mb-3">Global system reset or maintenance mode toggle.</p>
+                <button class="btn btn-danger btn-sm w-100 py-2">Enter Secure Shell</button>
+            </div>
+        </div>
     </div>
 </div>

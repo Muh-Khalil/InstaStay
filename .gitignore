@@ -2,3 +2,5 @@
 node_modules
 init
 ClassRoom
+npm-debug.log
+npm-cache

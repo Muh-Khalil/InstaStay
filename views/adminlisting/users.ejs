@@ -1,73 +1,82 @@
 <% layout("/layout/admin-dashboard.ejs")%>
 
-    <div>
-        <h3 class="text-center fw-bold mb-3">Users Management</h3>
-
-        <div class="row d-flex justify-content-center align-items-center mt-3">
-            <div class="col-md-5 mb-3">
-                <div class="card text-center shadow-lg rounded">
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold">Total Users</h5>
-                        <p class="card-text fs-4 text-primary">
-                            <%= users.length %>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-5 mb-3">
-                <div class="card text-center shadow-lg rounded">
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold">Revenue</h5>
-                        <p class="card-text fs-4 text-success">$120,000</p>
-                    </div>
-                </div>
-            </div>
+<div class="dashboard-header mb-5">
+    <div class="row align-items-center">
+        <div class="col">
+            <h1 style="font-family: var(--serif); font-weight: 700; font-size: 32px;" class="mb-1 text-white">Identity Management</h1>
+            <p class="text-white-50 mb-0">Review and control all registered users on the platform.</p>
         </div>
-
-
-        <div class="table-responsive shadow-lg p-2 bg-white rounded mt-4">
-            <table class="table table-hover table-striped align-middle text-center">
-                <thead class="table-dark">
-                    <tr>
-                        <th>No.</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th>Actions</th>
-
-                    </tr>
-                </thead>
-                <tbody>
-                    <% users.forEach((user, index)=> { %>
-                        <tr>
-                            <td class="fw-bold">
-                                <%= index + 1 %>
-                            </td>
-                            <td>
-                                <%= user.username %>
-                            </td>
-                            <td>
-                                <%= user.email %>
-                            </td>
-                            <td>
-                                <% if (user.isAdmin) { %>
-                                    <span class="badge bg-success">Admin</span>
-                                    <% } else { %>
-                                        <span class="badge bg-secondary">User</span>
-                                        <% } %>
-                            </td>
-                            <td>
-                                <a href="/admin/edit-user/<%= user._id %>" class="btn btn-warning btn-sm rounded-pill">
-                                    <i class="fas fa-edit"></i> <span class="d-sm-inline">Edit</span>
-                                </a>
-                                <a href="/admin/delete-user/<%= user._id %>"
-                                    class="btn btn-danger btn-sm rounded-pill ms-2">
-                                    <i class="fas fa-trash"></i> <span class="d-sm-inline">Delete</span>
-                                </a>
-                            </td>
-                        </tr>
-                        <% }) %>
-                </tbody>
-            </table>
+        <div class="col-auto">
+            <div class="stat-pill">
+                <span class="text-white-50 small me-2">Global Population:</span>
+                <span class="text-gold fw-bold"><%= users.length %> Users</span>
+            </div>
         </div>
     </div>
+</div>
+
+<div class="table-premium table-responsive">
+    <table class="table table-dark table-hover mb-0">
+        <thead>
+            <tr>
+                <th class="ps-4">No.</th>
+                <th>Identity</th>
+                <th>Contact info</th>
+                <th>Level</th>
+                <th class="text-end pe-4">Operations</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% users.forEach((user, index)=> { %>
+                <tr>
+                    <td class="ps-4 text-white-50 small">#<%= index + 1 %></td>
+                    <td>
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="bg-gold bg-opacity-10 text-gold rounded-pill d-flex align-items-center justify-content-center fw-bold" style="width: 35px; height: 35px; border: 1px solid rgba(201,168,76,0.1);">
+                                <%= user.username.charAt(0).toUpperCase() %>
+                            </div>
+                            <span class="fw-bold text-white"><%= user.username %></span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="text-white small"><%= user.email %></div>
+                        <div class="text-white-50" style="font-size: 11px;">Verified Member</div>
+                    </td>
+                    <td>
+                        <% if (user.isAdmin) { %>
+                            <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 px-2">Administrator</span>
+                        <% } else if (user.userRole === 'owner') { %>
+                            <span class="badge bg-info bg-opacity-10 text-info border border-info border-opacity-25 px-2">Hotel Owner</span>
+                        <% } else { %>
+                            <span class="badge bg-secondary bg-opacity-10 text-white-50 border border-white border-opacity-10 px-2">Standard User</span>
+                        <% } %>
+                    </td>
+                    <td class="text-end pe-4">
+                        <div class="d-flex justify-content-end gap-2">
+                             <a href="/admin/edit-user/<%= user._id %>" class="btn btn-outline-gold btn-sm"><i class="fas fa-edit"></i></a>
+                             <a href="/admin/delete-user/<%= user._id %>" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure you want to delete this user? This will also remove their properties and bookings.')"><i class="fas fa-trash-alt"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .stat-pill {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.07);
+        padding: 8px 20px;
+        border-radius: 50px;
+    }
+    .btn-outline-danger {
+        color: #e74c3c;
+        border-color: rgba(231, 76, 60, 0.3);
+    }
+    .btn-outline-danger:hover {
+        background: #e74c3c;
+        color: white;
+        border-color: #e74c3c;
+    }
+</style>

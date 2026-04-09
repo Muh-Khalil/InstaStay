@@ -14,6 +14,11 @@ let UserSchema = new mongoose.Schema({
     isAdmin: { 
         type: Boolean, 
         default: false 
+    },
+    userRole: {
+        type: String,
+        enum: ['guest', 'owner', 'admin'],
+        default: 'guest'
     }
 });
 

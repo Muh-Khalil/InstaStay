@@ -1,24 +1,40 @@
 <% layout("/layout/boilerplate") %>
-<div class="container-fluid">
-    <div class="row mt-3 mb-3 justify-content-center">
-        <h1 class="col-12 text-center">Login</h1>
-        <div class="col-12 col-md-6 col-lg-4">
-            <form action="/Login" method="post" class="needs-validation" novalidate>
-                <div class="mb-3">
-                    <label for="email" class="form-title">Email</label>
-                    <input type="email" name="email" id="email" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label for="password" class="form-title">Password</label>
-                    <input type="password" name="password" id="password" class="form-control" required>
-                </div>
-                <button class="btn btn-success w-100">Login</button>
-                
-            </form>
-            <div class="text-center login-page mt-2">
-                <span>Don't have an account?</span>
-                <a href="/signup">Sign up</a>
-            </div>
+
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-form-side">
+        <div class="auth-header">
+          <h2>Welcome Back</h2>
+          <p>Enter your details below to access your account reservations, bookings, and privileges.</p>
         </div>
+
+        <form action="/Login" method="post" class="auth-form needs-validation" novalidate>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" name="email" id="email" placeholder="example@domain.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" placeholder="••••••••" required>
+          </div>
+
+          <button class="auth-btn">Sign In to Account</button>
+        </form>
+
+        <div class="auth-footer">
+          <span>Don't have an account?</span>
+          <a href="/signup">Create One</a>
+        </div>
+      </div>
+
+      <div class="auth-img-side"
+        style="background-image: url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1000&q=80');">
+        <div class="auth-img-overlay">
+          <h3>InstaStay Membership</h3>
+          <p>Unlock exclusive member rates, early access to new properties, and complimentary upgrades during your stay.
+          </p>
+        </div>
+      </div>
     </div>
-</div>
+  </div>

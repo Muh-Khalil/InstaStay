@@ -1,0 +1,52 @@
+<% layout("/layout/owner-dashboard.ejs")%>
+
+<div class="dashboard-header mb-5">
+    <div class="row align-items-center">
+        <div class="col">
+            <h1 style="font-family: var(--serif); font-weight: 700; font-size: 32px;" class="mb-1 text-white">My Hotel Portfolio</h1>
+            <p class="text-white-50 mb-0">Manage your active listings and hotel details.</p>
+        </div>
+        <div class="col-auto">
+            <a href="/listings/new" class="btn btn-outline-gold">
+                <i class="fas fa-plus me-2"></i> Register Hotel
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <% if (listings.length > 0) { %>
+        <% listings.forEach(listing => { %>
+            <div class="col-xl-4 col-md-6">
+                <div class="dashboard-card p-0 overflow-hidden">
+                    <img src="<%= listing.image.url %>" class="w-100" style="height: 200px; object-fit: cover;">
+                    <div class="p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h3 class="fs-5 fw-bold mb-0 text-white"><%= listing.title %></h3>
+                            <span class="badge bg-gold bg-opacity-10 text-gold border border-gold border-opacity-25">$<%= listing.price %>/night</span>
+                        </div>
+                        <p class="small text-white-50 mb-4"><i class="fas fa-map-marker-alt me-1"></i> <%= listing.location %>, <%= listing.country %></p>
+                        
+                        <div class="d-flex gap-2">
+                            <a href="/listings/<%= listing._id %>" class="btn btn-outline-light btn-sm flex-grow-1 py-2">View Property</a>
+                            <a href="/listings/<%= listing._id %>/edit" class="btn btn-outline-gold btn-sm flex-grow-1 py-2">Edit Details</a>
+                        </div>
+                        <div class="mt-3 pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between text-white-50 small">
+                            <span><i class="fas fa-star text-warning me-1"></i> 4.9 (24 Reviews)</span>
+                            <span>Status: <strong class="text-success text-opacity-75">Active</strong></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+    <% } else { %>
+        <div class="col-12 text-center py-5">
+            <div class="dashboard-card py-5">
+                <i class="fas fa-hotel fs-1 text-white-50 mb-4 d-block"></i>
+                <h3 class="text-white">No Properties Found</h3>
+                <p class="text-white-50">You haven't added any properties to your portfolio yet.</p>
+                <a href="/listings/new" class="btn btn-gold px-4 mt-3">Start Hosting Now</a>
+            </div>
+        </div>
+    <% } %>
+</div>

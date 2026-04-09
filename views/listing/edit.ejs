@@ -1,67 +1,198 @@
 <% layout("/layout/boilerplate") %>
-<div class="container py-4">
-    <div class="row justify-content-center">
-        <div class="col-lg-8 col-md-10">
-            <div class="card shadow-sm p-4">
-                <h3 class="text-center mb-4">Edit Listing</h3>
-                <form method="POST" action="/listings/<%=editlisting._id%>/edit?_method=PUT" novalidate
-                    class="needs-validation" enctype="multipart/form-data">
-                    
-                    <!-- Title -->
-                    <div class="mb-3">
-                        <label for="title" class="form-label">Title</label>
-                        <input type="text" name="title" value="<%=editlisting.title%>" class="form-control" required>
-                        <div class="invalid-feedback">Title is required</div>
-                    </div>
-                    
-                    <!-- Description -->
-                    <div class="mb-3">
-                        <label for="description" class="form-label">Description</label>
-                        <textarea name="description" rows="5" class="form-control" required><%=editlisting.description%></textarea>
-                        <div class="invalid-feedback">Please enter a short description</div>
-                    </div>
-                    
-                    <!-- Image Preview -->
-                    <div class="mb-3 text-center">
-                        <img src="<%=editingUrl%>" alt="Edited Image" class="img-fluid rounded shadow-sm" style="max-height: 200px;">
-                    </div>
-                    
-                    <!-- Upload New Image -->
-                    <div class="mb-3">
-                        <label for="image" class="form-label">Upload New Image</label>
-                        <input type="file" name="image" class="form-control">
-                    </div>
-                    
-                    <div class="row">
-                        <!-- Price -->
-                        <div class="mb-3 col-md-4">
-                            <label for="price" class="form-label">Price ($)</label>
-                            <input type="number" name="price" value="<%=editlisting.price%>" class="form-control" required>
-                            <div class="invalid-feedback">Price cannot be negative</div>
-                        </div>
-                        
-                        <!-- Country -->
-                        <div class="mb-3 col-md-8">
-                            <label for="country" class="form-label">Country</label>
-                            <input type="text" name="country" value="<%=editlisting.country%>" class="form-control" required>
-                            <div class="invalid-feedback">Enter a valid country</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Location -->
-                    <div class="mb-3">
-                        <label for="location" class="form-label">Location</label>
-                        <input type="text" name="location" value="<%=editlisting.location%>" class="form-control" required>
-                        <div class="invalid-feedback">Invalid Location</div>
-                    </div>
-                    
-                    <!-- Submit Button -->
-                    <div class="d-grid">
-                        <button class="btn btn-success btn-lg">Update Listing</button>
-                    </div>
-                </form>
+
+<style>
+    .new-listing-wrap {
+        margin-top: 70px;
+        min-height: calc(100vh - 70px);
+        background: var(--dark);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .new-listing-bg {
+        position: absolute;
+        inset: 0;
+        background: url('<%=editingUrl%>') center/cover no-repeat;
+        opacity: 0.1;
+        z-index: 0;
+        filter: blur(10px) brightness(30%);
+    }
+
+    .creation-card {
+        width: 100%;
+        max-width: 900px;
+        background: var(--dark2);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 20px;
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8);
+        display: flex;
+    }
+
+    .creation-sidebar {
+        width: 320px;
+        background: linear-gradient(180deg, var(--gold-dark) 0%, var(--dark2) 100%);
+        padding: 60px 40px;
+        display: flex;
+        flex-direction: column;
+        display: none;
+    }
+
+    @media (min-width: 992px) {
+        .creation-sidebar { display: flex; }
+    }
+
+    .creation-content {
+        flex-grow: 1;
+        padding: 60px;
+    }
+
+    .form-header h2 {
+        font-family: var(--serif);
+        font-size: 32px;
+        color: var(--white);
+        margin-bottom: 12px;
+    }
+    .form-header p { color: var(--muted); font-size: 14px; margin-bottom: 40px; }
+
+    .luxury-input-group { margin-bottom: 25px; }
+    .luxury-label {
+        display: block;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        color: var(--gold);
+        margin-bottom: 12px;
+    }
+    .luxury-input {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 14px 18px;
+        color: var(--white);
+        font-family: var(--sans);
+        font-size: 15px;
+        outline: none;
+        transition: all 0.3s;
+    }
+    .luxury-input:focus {
+        border-color: var(--gold);
+        background: rgba(201,168,76,0.05);
+    }
+    .luxury-textarea { min-height: 120px; resize: none; }
+
+    .btn-create {
+        width: 100%;
+        background: var(--gold);
+        color: var(--dark);
+        border: none;
+        padding: 18px;
+        border-radius: 8px;
+        font-family: var(--sans);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        transition: all 0.3s;
+    }
+    .btn-create:hover {
+        background: var(--gold-light);
+        transform: translateY(-2px);
+    }
+
+    .preview-box {
+        background: rgba(255,255,255,0.03);
+        border: 1px dashed rgba(255,255,255,0.1);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+    .preview-box img { width: 100%; max-height: 180px; object-fit: cover; border-radius: 8px; }
+</style>
+
+<div class="new-listing-wrap">
+    <div class="new-listing-bg"></div>
+    
+    <div class="creation-card">
+        <div class="creation-sidebar">
+            <h3 style="font-family: var(--serif); color: var(--white); margin-bottom: 40px;">Hotel Editor</h3>
+            <p class="text-white text-opacity-75">Maintaining your hotel details ensures high occupancy and guest satisfaction.</p>
+            
+            <div class="mt-5 p-3 rounded" style="background: rgba(0,0,0,0.2);">
+                <small class="text-gold text-uppercase letter-spacing-1 d-block mb-2">Current Status</small>
+                <div class="d-flex align-items-center gap-2">
+                    <div class="rounded-circle bg-success" style="width: 8px; height: 8px;"></div>
+                    <span class="small fw-bold text-white">Online & Published</span>
+                </div>
             </div>
+        </div>
+
+        <div class="creation-content">
+            <div class="form-header">
+                <h2>Edit Hotel</h2>
+                <p>Refine your hotel information to reflect recent upgrades or changes in service.</p>
+            </div>
+
+            <form method="POST" action="/listings/<%=editlisting._id%>/edit?_method=PUT" novalidate class="needs-validation" enctype="multipart/form-data">
+                
+                <div class="luxury-input-group">
+                    <label class="luxury-label">Hotel Title</label>
+                    <input type="text" name="title" value="<%=editlisting.title%>" class="luxury-input" required>
+                </div>
+
+                <div class="luxury-input-group">
+                    <label class="luxury-label">Description</label>
+                    <textarea name="description" class="luxury-input luxury-textarea" required><%=editlisting.description%></textarea>
+                </div>
+
+                <div class="preview-box">
+                    <label class="luxury-label mb-3 d-block">Current Hotel Image</label>
+                    <img src="<%=editingUrl%>" alt="Hotel Image">
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="luxury-input-group">
+                            <label class="luxury-label">Update Image</label>
+                            <input type="file" name="image" class="luxury-input">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="luxury-input-group">
+                            <label class="luxury-label">Nightly Rate (USD)</label>
+                            <input type="number" name="price" value="<%=editlisting.price%>" class="luxury-input" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="luxury-input-group">
+                            <label class="luxury-label">Country</label>
+                            <input type="text" name="country" value="<%=editlisting.country%>" class="luxury-input" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="luxury-input-group">
+                            <label class="luxury-label">Location</label>
+                            <input type="text" name="location" value="<%=editlisting.location%>" class="luxury-input" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="submit-wrap">
+                    <button class="btn-create">Save Changes</button>
+                    <a href="/listings/<%=editlisting._id%>" class="btn btn-link w-100 mt-3 text-muted text-decoration-none small">Cancel & Return</a>
+                </div>
+            </form>
         </div>
     </div>
 </div>
-<script src="/js/script.js"></script>

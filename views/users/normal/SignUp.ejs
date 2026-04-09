@@ -1,28 +1,57 @@
 <% layout("/layout/boilerplate") %>
-<div class="container-fluid">
-    <div class="row mt-3 mb-3 justify-content-center">
-        <h1 class="col-12 text-center">SignUp</h1>
-        <div class="col-12 col-md-6 col-lg-4">
-            <form action="/SignUp" method="post" class="needs-validation" novalidate>
-                <div class="mb-3">
-                    <label for="username" class="form-title">Username</label>
-                    <input type="text" name="username" id="username" class="form-control" required>
-                    <div class="valid-feedback">look's Good!</div>
-                </div>
-                <div class="mb-3">
-                    <label for="email" class="form-title">Email</label>
-                    <input type="email" name="email" id="email" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label for="password" class="form-title">Password</label>
-                    <input type="password" name="password" id="password" class="form-control" required>
-                </div>
-                <button class="btn btn-success me-2 w-100">SignUp</button>
-            </form>
-            <div class="text-center login-page mt-2">
-                <span>Already have an account?</span>
-                <a href="/login">Log in</a>
-            </div>
+
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-form-side">
+        <div class="auth-header">
+          <h2>Join InstaStay</h2>
+          <p>Create an account to begin experiencing the pinnacle of luxury reservations and exclusive member rewards.
+          </p>
         </div>
+
+        <form action="/SignUp" method="post" class="auth-form needs-validation" novalidate>
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" placeholder="Choose a display name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" name="email" id="email" placeholder="example@domain.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" placeholder="••••••••" required>
+          </div>
+
+          <div class="form-group">
+            <label>Account Type</label>
+            <div class="role-selector">
+              <input type="radio" name="userRole" value="guest" id="role-guest" checked>
+              <label for="role-guest" class="role-btn">Guest</label>
+
+              <input type="radio" name="userRole" value="owner" id="role-owner">
+              <label for="role-owner" class="role-btn">Hotel Owner</label>
+            </div>
+          </div>
+
+          <button class="auth-btn">Create Account</button>
+        </form>
+
+        <div class="auth-footer">
+          <span>Already have an account?</span>
+          <a href="/login">Log in</a>
+        </div>
+      </div>
+
+      <div class="auth-img-side"
+        style="background-image: url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1000&q=80');">
+        <div class="auth-img-overlay">
+          <h3>Begin Your Journey</h3>
+          <p>Your sanctuary awaits. Connect with us and instantly transform the way you experience the world's most
+            breathtaking accommodations.</p>
+        </div>
+      </div>
     </div>
-</div>
+  </div>

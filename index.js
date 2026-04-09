@@ -23,6 +23,7 @@ const reviewRoutes = require("./routes/reviews.js");
 const UsersRoutes = require("./routes/users.js");
 const adminRoutes = require("./routes/admin.js");
 const adminlistingsRoutes = require("./routes/adminlisting.js");
+const ownerRoutes = require("./routes/owner.js");
 
 const port = process.env.PORT || 3000; // Use environment port if available
 
@@ -92,13 +93,20 @@ app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     res.locals.currUser = req.user || null;
+    res.locals.req = req;
     next();
 });
 
 // Root route
-app.get("/", (req, res) => {
-    console.log("Root route accessed");
-    res.send("Welcome to Instay!");
+app.get("/", async (req, res, next) => {
+    try {
+        console.log("Root route accessed");
+        const Listing = require("./models/listing.js");
+        let allListings = await Listing.find();
+        res.render("home.ejs", { allListings });
+    } catch(err) {
+        next(err);
+    }
 });
 
 // Routes
@@ -107,6 +115,7 @@ app.use("/listings/:id/reviews", reviewRoutes);
 app.use(UsersRoutes);
 app.use("/admin", adminlistingsRoutes);
 app.use("/admin", adminRoutes);
+app.use("/owner", ownerRoutes);
 
 
 // Handle undefined routes

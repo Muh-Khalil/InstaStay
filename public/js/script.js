@@ -35,3 +35,31 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+
+
+
+  // Nav scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.05 });
+  reveals.forEach(r => observer.observe(r));
+
+  // Search date defaults
+  const today = new Date();
+  const fmt = d => d.toISOString().split('T')[0];
+  const cin = today; cin.setDate(today.getDate());
+  const cout = new Date(today); cout.setDate(today.getDate() + 3);
+  document.querySelectorAll('input[type=date]')[0].value = fmt(cin);
+  document.querySelectorAll('input[type=date]')[1].value = fmt(cout);

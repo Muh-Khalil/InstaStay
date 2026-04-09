@@ -1,113 +1,165 @@
 <% layout("/layout/boilerplate") %>
-    <script>
-        const coordinate = <%= JSON.stringify(showDetails.geometry.coordinates) %>
-    </script>
-    <div class="container">
-        <div class="row flex-column justify-content-center align-items-center">
-            <div class="col-lg-6 col-md-8 col-sm-10 col-12 text-center mt-3">
-                <h3 class="fw-bold mb-3">
-                        <%=showDetails.title%>
-                    </h3>
-            </div>
-            <div class="col-lg-6 col-md-8 col-sm-10 col-12">
-                <div class="card">
-                    <img src="<%=showDetails.image.url%>" class="card-img-top show-image" alt="listing image">
-                    <div class="card-body">
-                        <p class="card-text">
-                            <b>Owned By:</b>
-                            <%=showDetails.owner.username%> <br>
-                                <%=showDetails.description%> <br>
-                                    <%=showDetails.price.toLocaleString("en-IN")%> $ <br>
-                                        <%=showDetails.location%>, <%=showDetails.country%> <br>
+<script>
+    const coordinate = <%- (typeof showDetails !== "undefined" && showDetails.geometry && showDetails.geometry.coordinates) ? JSON.stringify(showDetails.geometry.coordinates) : JSON.stringify([0, 0]) %>;
+</script>
 
-                                                <!-- Room Status -->
-                                                <% if (showDetails.status==="Booked" ) { %>
-                                                    <span class="badge bg-danger">Booked</span>
-                                                    <% } else { %>
-                                                        <span class="badge bg-success">Available</span>
-                                                        <% } %>
-                        </p>
-
-                        <!-- Booking Button (Disabled if booked) -->
-                        <% if (showDetails.status==="Available" ) { %>
-                            <a href="/listings/<%= showDetails._id %>/booking" class="btn btn-primary">Book Now</a>
-                            <% } else { %>
-                                <button class="btn btn-secondary" disabled>Booked</button>
-                                <% } %>
-                    </div>
-                </div>
-            </div>
-
-            <% if(currUser && showDetails.owner._id.equals(currUser._id)) { %>
-                <div class="show-btn mt-3">
-                    <a href="/listings/<%=showDetails._id%>/edit" class="btn btn-secondary btn-styling">Edit</a>
-                    <a href="/listings/<%=showDetails._id%>/delete" class="btn btn-danger btn-styling">Delete</a>
-                </div>
-                <% } %>
-        </div>
-    </div>
-    <div class="container mt-5">
-        <h2 class="text-center">Reviews</h2>
-
-        <% if (showDetails.reviews.length> 0) { %>
-            <div class="row mt-3 justify-content-center">
-                <% showDetails.reviews.forEach(review=> { %>
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-                        <div class="card shadow-sm h-100">
-                            <div class="card-body">
-                                <h5 class="card-title"><strong>@<%= review.Author.username %></strong></h5>
-                                <p class="card-text">
-                                    <strong>Rating:</strong>
-                                    <span class="text-warning">
-                                        <% for (let i=0; i < review.rating; i++) { %>
-                                            <i class="fa-solid fa-star"></i>
-                                            <% } %>
-                                    </span>
-                                </p>
-                                <p class="card-text"><strong>Comment:</strong>
-                                    <%= review.comment %>
-                                </p>
-                                <form action="/listings/<%= showDetails._id %>/reviews/<%=review._id%>" method="post">
-                                    <button class="btn btn-outline-danger">Delete</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <% }); %>
-            </div>
-            <% } else { %>
-                <p class="text-muted text-center">No reviews yet. Be the first to leave one!</p>
-                <% } %>
-
-                    <!-- Review Form -->
-<div class="card shadow-none mt-4 col-lg-6 col-md-8 col-sm-10 col-12">
-    <div class="card-body listing-card">
-        <h4 class="card-title text-center">Leave a Review</h4>
-        <form action="/listings/<%= showDetails._id %>/reviews" method="POST">
-            <div class="mb-3">
-                <label for="rating" class="form-label">Rating:</label>
-                <div class="star-rating">
-                    <input type="hidden" name="rating" id="rating" required>
-                    <i class="fa-regular fa-star" style="color: rgb(212, 209, 209);" data-value="1"></i>
-                    <i class="fa-regular fa-star" style="color: rgb(212, 209, 209);" data-value="2"></i>
-                    <i class="fa-regular fa-star" style="color: rgb(212, 209, 209);" data-value="3"></i>
-                    <i class="fa-regular fa-star" style="color: rgb(212, 209, 209);" data-value="4"></i>
-                    <i class="fa-regular fa-star" style="color: rgb(212, 209, 209);" data-value="5"></i>
-                </div>
-            </div>
-
-            <div class="mb-3">
-                <label for="comment" class="form-label">Comment:</label>
-                <textarea name="comment" class="form-control" rows="3" required></textarea>
-            </div>
-
-            <div class="text-center">
-                <button type="submit" class="btn btn-primary mb-3">Submit Review</button>
-            </div>
-        </form>
-    </div>
+<!-- PAGE BANNER (BREADCRUMB) -->
+<div class="rk-page-banner">
+  <h1 class="rk-banner-title">Room Details</h1>
+  <div class="rk-breadcrumb">
+    <a href="/">Home</a> <span>/</span> <a href="/listings">Rooms</a> <span>/</span> <%= showDetails.title %>
+  </div>
 </div>
 
-    <div id="map" class="col-lg-6 col-md-8 col-sm-10 col-12 mx-auto"></div>
+<section class="rk-room-details-section">
+  <div class="rk-room-grid">
+    
+    <!-- LEFT SIDE: ROOM INFO -->
+    <div class="rk-room-left">
+      <!-- Gallery Slider Placeholder (Single Image for now) -->
+      <div class="rk-room-gallery">
+        <img src="<%=showDetails.image.url%>" alt="<%=showDetails.title%>">
+      </div>
+
+      <div class="rk-room-header">
+        <h2 class="rk-room-title"><%=showDetails.title%></h2>
+        <div class="rk-room-price">
+          <strong>PKR <%=showDetails.price.toLocaleString("en-IN")%></strong>
+          <span>/ Night</span>
+        </div>
+      </div>
+
+      <div class="rk-room-meta">
+        <span><i class="fa-solid fa-user-tie"></i> Hosted by <%=showDetails.owner.username%></span>
+        <span><i class="fa-solid fa-location-dot"></i> <%=showDetails.location%>, <%=showDetails.country%></span>
+        <% if (showDetails.status === "Booked") { %>
+          <span style="color: #dc3545;"><i class="fa-solid fa-circle-xmark" style="color: #dc3545;"></i> Booked</span>
+        <% } else { %>
+          <span style="color: #198754;"><i class="fa-solid fa-circle-check" style="color: #198754;"></i> Available</span>
+        <% } %>
+      </div>
+
+      <h3 class="rk-section-title">Room Description</h3>
+      <p class="rk-desc-text">
+        <%=showDetails.description%>
+      </p>
+      
+      <!-- Amenities (Mocked based on ThemeForest layout) -->
+      <h3 class="rk-section-title">Room Amenities</h3>
+      <div class="rk-amenities-grid">
+        <div class="rk-amenity-item"><div class="rk-amenity-icon"><i class="fa-solid fa-wifi"></i></div> High Speed Wifi</div>
+        <div class="rk-amenity-item"><div class="rk-amenity-icon"><i class="fa-solid fa-tv"></i></div> Flat Screen TV</div>
+        <div class="rk-amenity-item"><div class="rk-amenity-icon"><i class="fa-solid fa-snowflake"></i></div> Air Conditioning</div>
+        <div class="rk-amenity-item"><div class="rk-amenity-icon"><i class="fa-solid fa-bath"></i></div> Private Bathroom</div>
+        <div class="rk-amenity-item"><div class="rk-amenity-icon"><i class="fa-solid fa-mug-hot"></i></div> Coffee Maker</div>
+        <div class="rk-amenity-item"><div class="rk-amenity-icon"><i class="fa-solid fa-vault"></i></div> In-room Safe</div>
+      </div>
+
+      <h3 class="rk-section-title">Property Location</h3>
+      <div id="map" class="rk-map-box"></div>
+
+      <!-- Reviews Section -->
+      <div class="rk-reviews-area">
+        <h3 class="rk-section-title">Guest Reviews</h3>
+        <% if (showDetails.reviews.length > 0) { %>
+          <% showDetails.reviews.forEach(review => { %>
+            <div class="rk-review-box">
+              <div class="rk-review-head">
+                <div class="rk-review-author">
+                  <i class="fa-solid fa-circle-user"></i> <%= review.Author.username %>
+                </div>
+                <div class="rk-review-stars">
+                  <% for (let i = 0; i < review.rating; i++) { %> <i class="fa-solid fa-star"></i> <% } %>
+                  <% for (let i = review.rating; i < 5; i++) { %> <i class="fa-regular fa-star" style="color: rgba(255,255,255,0.2);"></i> <% } %>
+                </div>
+              </div>
+              <p class="rk-review-comment">"<%= review.comment %>"</p>
+              
+              <% if(currUser && review.Author._id.equals(currUser._id)) { %>
+                <form action="/listings/<%= showDetails._id %>/reviews/<%=review._id%>" method="post" style="text-align: right; margin-top: 10px;">
+                  <button type="submit" class="btn btn-sm btn-outline-danger" style="font-size: 11px;">Remove Post</button>
+                </form>
+              <% } %>
+            </div>
+          <% }); %>
+        <% } else { %>
+          <p class="rk-desc-text">No reviews yet for this room. Be the first to share your experience!</p>
+        <% } %>
+
+        <% if(currUser) { %>
+          <div class="rk-review-form-wrapper">
+            <h3 class="rk-section-title" style="margin-bottom: 20px;">Leave a Review</h3>
+            <form action="/listings/<%= showDetails._id %>/reviews" method="POST">
+              <div style="margin-bottom: 20px;">
+                <label style="display:block; color:var(--muted); font-size:12px; text-transform:uppercase; margin-bottom:8px;">Your Rating</label>
+                <div class="star-rating" style="color: var(--gold); font-size: 20px; cursor: pointer;">
+                  <input type="hidden" name="rating" id="rating" required>
+                  <i class="fa-regular fa-star" data-value="1"></i>
+                  <i class="fa-regular fa-star" data-value="2"></i>
+                  <i class="fa-regular fa-star" data-value="3"></i>
+                  <i class="fa-regular fa-star" data-value="4"></i>
+                  <i class="fa-regular fa-star" data-value="5"></i>
+                </div>
+              </div>
+              <textarea name="comment" class="rk-input-field" rows="4" placeholder="Write your review here..." required></textarea>
+              <button type="submit" class="rk-btn-submit" style="width: auto; padding: 14px 30px;">Submit Review</button>
+            </form>
+          </div>
+        <% } %>
+      </div>
+
     </div>
-    <script src="/js/leaflet.js"></script>
+
+    <!-- RIGHT SIDE: SIDEBAR -->
+    <div class="rk-sidebar">
+      
+      <!-- Booking Widget -->
+      <div class="rk-widget-booking">
+        <h3 class="rk-widget-title">Your Reservation</h3>
+        
+        <form>
+          <div class="rk-form-group">
+            <label>Check In</label>
+            <i class="fa-regular fa-calendar"></i>
+            <input type="date" class="rk-form-input">
+          </div>
+          <div class="rk-form-group">
+            <label>Check Out</label>
+            <i class="fa-regular fa-calendar"></i>
+            <input type="date" class="rk-form-input">
+          </div>
+          <div class="rk-form-group">
+            <label>Guests</label>
+            <i class="fa-solid fa-user"></i>
+            <select class="rk-form-input" style="color: var(--muted);">
+              <option>1 Adult, 0 Children</option>
+              <option>2 Adults, 0 Children</option>
+              <option>2 Adults, 1 Child</option>
+              <option>2 Adults, 2 Children</option>
+              <option>3 Adults, 0 Children</option>
+            </select>
+          </div>
+          
+          <% if (showDetails.status === "Available") { %>
+            <a href="/listings/<%= showDetails._id %>/booking" class="rk-btn-submit">Check Availability</a>
+          <% } else { %>
+            <button type="button" class="rk-btn-submit rk-btn-disabled" disabled>Room Booked</button>
+          <% } %>
+        </form>
+      </div>
+      
+      <!-- Admin Actions Widget -->
+      <% if(currUser && showDetails.owner._id.equals(currUser._id)) { %>
+        <div class="rk-widget-admin">
+          <h4>Host Controls</h4>
+          <a href="/listings/<%=showDetails._id%>/edit" class="rk-btn-submit" style="background: transparent; border: 1px solid rgba(255,255,255,0.4); color: var(--white); margin-bottom: 10px;">Edit Listing</a>
+          <a href="/listings/<%=showDetails._id%>/delete" class="rk-btn-submit" style="background: #dc3545; color: white;">Delete Property</a>
+        </div>
+      <% } %>
+
+    </div>
+
+  </div>
+</section>
+
+<script src="/js/leaflet.js"></script>
