@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!-- NAV -->
 <nav id="navbar">
   <a href="/" class="nav-logo">Insta<span>Stay</span></a>
@@ -33,6 +34,35 @@
         <a href="/login" class="btn-outline">Sign In</a>
         <a href="/signup" class="btn-gold">Book Now</a>
       <% } %>
+=======
+<style>
+
+</style>
+<nav class="navbar navbar-expand-md border-bottom">
+  <div class="container-fluid">
+    <a class="navbar-brand logo" href="/">InstaStay</a>
+    <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <div class="collapse navbar-collapse text-center" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link active" aria-current="page" href="/listings">Home</a>
+        <a class="nav-link" href="/listings/AboutUs">About Us</a>
+        <a class="nav-link" href="/listings/new">Add new List</a>
+        <a class="nav-link" href="/listings/filter">Filtering</a>
+      </div>
+      <div class="navbar-nav ms-auto">
+        <% if(typeof currUser !=="undefined" && currUser){ %>
+          <a class="nav-link" href="/logout">Log out</a>
+          <% } else { %>
+            <a class="nav-link active" aria-current="page" href="/signup">SignUp</a>
+            <a class="nav-link" href="/login">Log In</a>
+            <% } %>
+      </div>
+>>>>>>> 9fcd5203d4cfb6e5267f843a3ae8428841848cc5
     </div>
   </div>
 </nav>
