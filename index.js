@@ -21,7 +21,7 @@ const { saveRedirectUrl, IsOwner, IsReviewedAuthor, isAdmin } = require("./middl
 const listingsRoutes = require("./routes/listings.js");
 const reviewRoutes = require("./routes/reviews.js");
 const UsersRoutes = require("./routes/users.js");
-const adminRoutes = require("./routes/admin.js");
+const adminRoutes = require("./routes/adminAuth.js");
 const adminlistingsRoutes = require("./routes/adminlisting.js");
 const ownerRoutes = require("./routes/owner.js");
 
