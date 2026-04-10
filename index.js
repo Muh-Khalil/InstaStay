@@ -35,7 +35,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(methodOverride("_method"));
-app.use(express.static(path.join(__dirname, "/public")));
+app.use(express.static(path.join(__dirname, "public")));
 
 // MongoDB connection
 const dbUrl = process.env.MONGO_ATLAS_URL || "mongodb://localhost:27017/myapp";
@@ -66,7 +66,7 @@ sessionStore.on("error", (err) => {
 });
 
 const sessionOptions = {
-    store: MongoStore.create({ mongoUrl: process.env.MONGO_ATLAS_URL }),
+    store: sessionStore, // Reuse the already configured store
     secret: process.env.SESSION_SECRET || "FirstProject",
     resave: false,
     saveUninitialized: true,
