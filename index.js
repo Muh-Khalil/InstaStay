@@ -55,9 +55,6 @@ connectDB();
 const sessionStore = MongoStore.create({
     mongoUrl: dbUrl,
     touchAfter: 24 * 3600, // Reduces session updates
-    crypto: {
-        secret: process.env.SESSION_SECRET || "FirstProject",
-    }
 });
 
 
@@ -103,7 +100,7 @@ app.get("/", async (req, res, next) => {
         console.log("Root route accessed");
         const Listing = require("./models/listing.js");
         let allListings = await Listing.find();
-        res.render("home.ejs", { allListings });
+        res.render("home");
     } catch(err) {
         next(err);
     }

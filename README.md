@@ -1,8 +1,6 @@
 # 🏨 InstaStay – Luxury Hotel Booking Platform
 
 **InstaStay** is a premium, high-contrast digital sanctuary for travelers and hotel owners. Built with a focus on luxury aesthetics and seamless functionality, it provides a comprehensive suite for searching, booking, and managing elite accommodations.
-
-<<<<<<< HEAD
 ---
 
 ## 📸 Screenshots
@@ -40,7 +38,6 @@ Stay updated with luxury travel tips and culinary insights through our modern gr
 ✅ **Search & Filters** – Advanced filters to find the best stays based on location, price, and rating.  
 ✅ **Geolocation Tracking** – Track user location to suggest nearby hotels. 
 ✅ **MVC Architecture** - Organized code structure for maintainability and scalability.
->>>>>>> 9fcd5203d4cfb6e5267f843a3ae8428841848cc5
 
 ---
 
