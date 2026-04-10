@@ -90,8 +90,8 @@ passport.deserializeUser(User.deserializeUser());
 
 // Flash middleware
 app.use((req, res, next) => {
-    res.locals.success = req.flash("success");
-    res.locals.error = req.flash("error");
+    res.locals.success = (req.flash && req.flash("success")) || [];
+    res.locals.error = (req.flash && req.flash("error")) || [];
     res.locals.currUser = req.user || null;
     res.locals.req = req;
     next();
